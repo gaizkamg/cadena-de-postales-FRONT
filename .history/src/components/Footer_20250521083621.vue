@@ -10,12 +10,11 @@
 
 <style scoped>
 .footer {
-  width: 100%; 
   background-color: #0f4d03;
+  
+  text-align: center;
   padding: 1rem;
+  font-size: 0.9rem;
   color: #fcfdfc;
-  text-align: center; 
-  display: block;
-  margin: 0;
 }
 </style>

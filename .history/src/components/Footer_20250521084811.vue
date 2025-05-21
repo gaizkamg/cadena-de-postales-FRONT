@@ -16,6 +16,6 @@
   color: #fcfdfc;
   text-align: center; 
   display: block;
-  margin: 0;
+ margin: 0;
 }
 </style>

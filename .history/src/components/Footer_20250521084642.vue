@@ -15,7 +15,7 @@
   padding: 1rem;
   color: #fcfdfc;
   text-align: center; 
-  display: block;
-  margin: 0;
+ display: block;
+ margin: 0;
 }
 </style>
