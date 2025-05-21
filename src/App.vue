@@ -6,6 +6,7 @@ import Navbar from './components/navbar.vue'
 
 <template>
    <Footer />
+   <Navbar />
 </template>
 
 <style scoped>
