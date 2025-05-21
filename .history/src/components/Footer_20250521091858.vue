@@ -21,6 +21,6 @@
   padding: 1rem;
   color: #fcfdfc;
   text-align: center;
-  z-index: 1000;
+  z-index: 1000; /* para que quede por encima si hay otros elementos */
 }
 </style>

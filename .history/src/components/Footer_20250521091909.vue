@@ -22,5 +22,4 @@
   color: #fcfdfc;
   text-align: center;
   z-index: 1000;
-}
 </style>

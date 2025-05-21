@@ -10,8 +10,7 @@
 
 <style scoped>
 .footer {
-  position: fixed;
-  bottom: 0;
+  position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
@@ -21,6 +20,5 @@
   padding: 1rem;
   color: #fcfdfc;
   text-align: center;
-  z-index: 1000;
 }
 </style>
