@@ -1,84 +1,40 @@
 <template>
   <header class="navbar">
-    <div class="logo">MyLogo</div>
+    <div class="logo"><a href="/">Cadena de Postales</a></div>
     <nav class="menu">
-      <a href="#">Home</a>
+      <a href="/">Home</a>
+      <a href="/info">Cómo funciona</a>
       <button class="registro-btn" @click="openRegister">Registro</button>
       <button class="login-btn" @click="openLogin">Login</button>
     </nav>
 
-  <!-- Register Modal -->
-<div v-if="showRegister" class="modal">
-  <div class="modal-content">
-    <span class="close" @click="closeModals">&times;</span>
-    <h2>Registro Form</h2>
-
-    <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" placeholder="Nombre" />
-
-   <label for="apellido">Apellido</label>
-    <input id="apellido" type="text" placeholder="Apellido" />
-
-    <label for="dedicacion">¿A qué te dedicas en Peñascal Kooperatiba?</label>
-    <select id="dedicacion">
-      <option disabled selected>Selecciona una opción</option>
-      <option>Estudio</option>
-      <option>Trabajo</option>
-    </select>
-
-    <label for="centro">¿En qué centro formativo sueles estar?</label>
-    <select id="centro">
-      <option disabled selected>Selecciona un centro</option>
-      <option>Boluetabarri / Modo - Comercio</option>
-      <option>Boluetabarri / Informática</option>
-      <option>Boluetabarri / Climatización - Fontanería</option>
-      <option>Boluetabarri / Madera</option>
-      <option>Boluetabarri / Hostalería</option>
-      <option>Boluetabarri / Administración</option>
-      <option>Boluetabarri / Complementaria</option>
-      <option>Montaño / Hostalería</option>
-      <option>Montaño / Construcción - Electricidad</option>
-      <option>Belategi / Metal</option>
-      <option>Tolosa</option>
-      <option>Sarrikue</option>
-      <option>Markina</option>
-      <option>Errenteria</option>
-      <option>Intervención Social Bizkaia</option>
-      <option>EPA Gipuzkoa</option>
-      <option>EPA Bizkaia</option>
-    </select>
-
-    <label for="linguistico">¿Perteneces a un grupo de refuerzo lingüístico?</label>
-    <select id="linguistico">
-      <option disabled selected>Selecciona una opción</option>
-      <option>Sí</option>
-      <option>No</option>
-    </select>
-
-    <button class="registro-btn">Registrar</button>
-
-    <p class="switch-text">
-      ¿Ya tienes cuenta?
-      <a href="#" @click.prevent="switchToLogin">Login</a>
-    </p>
-  </div>
-</div>
-
+    <!-- Register Modal -->
+    <div v-if="showRegister" class="modal">
+      <div class="modal-content">
+        <span class="close" @click="closeModals">&times;</span>
+        <h2>Registro Cuenta Usuario</h2>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="email" />
+        <label for="password">Password</label>
+        <input id="password" type="text" placeholder="password" />
+        <button class="registro-btn">Registrar</button>
+        <p class="switch-text">
+          ¿Ya tienes cuenta?
+          <a href="#" @click.prevent="switchToLogin">Login</a>
+        </p>
+      </div>
+    </div>
 
     <!-- Login Modal -->
     <div v-if="showLogin" class="modal">
       <div class="modal-content">
         <span class="close" @click="closeModals">&times;</span>
         <h2>Login Form</h2>
-
         <label for="login-email">Email</label>
         <input id="login-email" type="email" placeholder="Email" />
-
         <label for="login-password">Password</label>
         <input id="login-password" type="password" placeholder="Password" />
-
         <button class="login-btn">Login</button>
-
         <!-- Switch to Registro -->
         <p class="switch-text">
           ¿No tienes cuenta?
@@ -89,38 +45,32 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'Navbar',
-  data() {
-    return {
-      showRegister: false,
-      showLogin: false,
-    };
-  },
-  methods: {
-    openRegister() {
-      this.showRegister = true;
-      this.showLogin = false;
-    },
-    openLogin() {
-      this.showLogin = true;
-      this.showRegister = false;
-    },
-    closeModals() {
-      this.showLogin = false;
-      this.showRegister = false;
-    },
-    switchToLogin() {
-      this.showRegister = false;
-      this.showLogin = true;
-    },
-    switchToRegister() {
-      this.showLogin = false;
-      this.showRegister = true;
-    },
-  },
-};
+<script setup>
+import { ref } from 'vue';
+
+const showRegister = ref(false);
+const showLogin = ref(false);
+
+function openRegister() {
+  showRegister.value = true;
+  showLogin.value = false;
+}
+function openLogin() {
+  showLogin.value = true;
+  showRegister.value = false;
+}
+function closeModals() {
+  showLogin.value = false;
+  showRegister.value = false;
+}
+function switchToLogin() {
+  showRegister.value = false;
+  showLogin.value = true;
+}
+function switchToRegister() {
+  showLogin.value = false;
+  showRegister.value = true;
+}
 </script>
 
 <style scoped>
@@ -225,6 +175,10 @@ export default {
   font-size: 15px;
   font-weight: 600;
   color: #333;
+}
+
+.modal-content h2{
+  color: black;
 }
 
 
