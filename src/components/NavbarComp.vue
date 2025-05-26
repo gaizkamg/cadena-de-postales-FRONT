@@ -4,8 +4,19 @@
     <nav class="menu">
       <a href="/">Home</a>
       <a href="/info">Cómo funciona</a>
-      <button class="registro-btn" @click="openRegister">Registro</button>
-      <button class="login-btn" @click="openLogin">Login</button>
+      <template v-if="isAuthenticated">
+        <template v-if="user && user.rol_id === 1">
+          <a href="/admin">Admin</a>
+        </template>
+        <template v-else>
+          <a href="/dashboard">Dashboard</a>
+        </template>
+        <button class="login-btn" @click="handleLogout">Logout</button>
+      </template>
+      <template v-else>
+        <button class="registro-btn" @click="openRegister">Registro</button>
+        <button class="login-btn" @click="openLogin">Login</button>
+      </template>
     </nav>
 
     <!-- Register Modal -->
@@ -82,13 +93,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import LoginComp from '@/components/LoginComp.vue';
 
 const showRegister = ref(false)
 const showLogin = ref(false)
 const authStore = useAuthStore()
+
+const isAuthenticated = computed(() => authStore.isAuthenticated)
+const user = computed(() => authStore.user)
 
 function openRegister() {
   showRegister.value = true
@@ -135,6 +149,12 @@ const submitForm = async () => {
     email: '',
     password: ''
   }
+}
+
+function handleLogout() {
+  authStore.logout()
+  // Opcional: recarga la página o redirige a home
+  window.location.href = '/'
 }
 </script>
 
