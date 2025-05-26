@@ -122,10 +122,79 @@ const form = ref({
   centro: '',
   linguistico: '',
   email: '',
-  password: ''
+  contrasena: '' // <- password
 })
 
+// Centro a ID mapping
+const centroMap = {
+  'Boluetabarri / Modo - Comercio': 1,
+  'Boluetabarri / Informática': 2,
+  'Boluetabarri / Climatización - Fontanería': 3,
+  'Boluetabarri / Madera': 4,
+  'Boluetabarri / Hostalería': 5,
+  'Boluetabarri / Administración': 6,
+  'Boluetabarri / Complementaria': 7,
+  'Montaño / Hostalería': 8,
+  'Montaño / Construcción - Electricidad': 9,
+  'Belategi / Metal': 10,
+  'Tolosa': 11,
+  'Sarrikue': 12,
+  'Markina': 13,
+  'Errenteria': 14,
+  'Intervención Social Bizkaia': 15,
+  'EPA Gipuzkoa': 16,
+  'EPA Bizkaia': 17
+}
+
 const submitForm = async () => {
+  try {
+    // Validaciones básicas
+    if (!form.value.nombre || !form.value.apellido || !form.value.email || !form.value.password) {
+      alert('Por favor completa los campos obligatorios')
+      return
+    }
+
+    // Mapeamos valores del formulario al formato que espera Flask
+    const userData = {
+      nombre: form.value.nombre,
+      apellido: form.value.apellido,
+      email: form.value.email,
+      contrasena: form.value.password,
+      penascal_rol: form.value.dedicacion || null,
+      centro_id: centroMap[form.value.centro] || null,
+      refuerzo_linguistico: form.value.linguistico === 'Sí',
+      rol_id: 2, // Rol por defecto para nuevos usuarios
+      sector_id: null,
+      fecha_alta: null,
+      fecha_baja: null
+    }
+
+    // Llamamos a la función register del store
+    const success = await authStore.register(userData)
+
+    if (success) {
+      alert('Registro exitoso')
+      closeModals()
+      // Reiniciar formulario
+      form.value = {
+        nombre: '',
+        apellido: '',
+        dedicacion: '',
+        centro: '',
+        linguistico: '',
+        email: '',
+        contrasena: ''
+      }
+    } else {
+      alert('Hubo un error al registrarte')
+    }
+  } catch (error) {
+    console.error('Error al enviar formulario:', error)
+    alert('Hubo un problema al procesar tu registro.')
+  }
+}
+
+/*const submitForm = async () => {
   // Aquí deberías llamar a tu store o API para registrar
   await authStore.register(form.value)
   closeModals()
@@ -139,7 +208,7 @@ const submitForm = async () => {
     email: '',
     password: ''
   }
-}
+}*/
 </script>
 
 <style scoped>
