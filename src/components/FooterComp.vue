@@ -10,10 +10,6 @@
 
 <style scoped>
 .footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   width: 100%;
   background-color: #0f4d03;
   padding: 1rem;

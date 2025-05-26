@@ -29,5 +29,15 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+
+  if (to.meta.requiresAuth && !token) {
+    next('/'); // Redirigir a la página de inicio si no está autenticado
+  } else {
+    next(); // Continuar con la navegación
+  }
+});
+
 export default router;
 

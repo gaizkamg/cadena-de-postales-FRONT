@@ -71,5 +71,25 @@ export function useApi() {
     }
   }
 
-  return { data, loading, error, fetchData, postData, putData, deleteData }
+  const fetchUsers = async () => {
+    try {
+      const response = await axiosInstance.get('/api/usuarios')
+      return response.data
+    } catch (err) {
+      console.error('Error fetching users:', err)
+      throw err
+    }
+  }
+
+  const patchUser = async (userId, payload) => {
+    try {
+      const response = await axiosInstance.patch(`/api/usuarios/${userId}`, payload)
+      return response.data
+    } catch (err) {
+      console.error('Error patching user:', err)
+      throw err
+    }
+  }
+
+  return { data, loading, error, fetchData, postData, putData, deleteData, fetchUsers, patchUser }
 }

@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useApi } from '@/composables/useApi.js'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
 // defineStore crea un "almacén" como cajón de datos global
 export const useAuthStore = defineStore('auth', () => {
 
@@ -27,12 +29,11 @@ export const useAuthStore = defineStore('auth', () => {
   // Función para login
   async function login(email, password) {
     try {
-      const { fetchData } = useApi() // Usamos el composable
+      const { postData } = useApi()
+      const response = await postData(`${API_BASE_URL}/api/auth/login`, { email, contrasena: password })
+      const userData = response.data
 
-      const response = await fetchData(`http://localhost:3000/users?email=${email}`)
-      const userData = response.data[0]
-
-      if (userData && userData.password === password) {
+      if (userData) {
         user.value = userData
         isAuthenticated.value = true
         sessionStorage.setItem('user', JSON.stringify(userData))
@@ -48,17 +49,12 @@ export const useAuthStore = defineStore('auth', () => {
   // Función para registro
   async function register(name, email, password) {
     try {
-      const { fetchData, postData } = useApi()
-      const response = await fetchData(`http://localhost:3000/users?email=${email}`)
-      if (response.data.length > 0) {
-        throw new Error('El usuario ya existe')
-      }
-
-      const newUser = { name, email, password }
-      await postData('http://localhost:3000/users', newUser)
-      user.value = newUser
+      const { postData } = useApi()
+      const newUser = { nombre: name, email, contrasena: password }
+      const response = await postData(`${API_BASE_URL}/api/auth/register`, newUser)
+      user.value = response.data
       isAuthenticated.value = true
-      sessionStorage.setItem('user', JSON.stringify(newUser))
+      sessionStorage.setItem('user', JSON.stringify(response.data))
       return true
     } catch (error) {
       console.error('Error de registro:', error)
