@@ -1,14 +1,25 @@
 import { ref } from 'vue'
 import axios from 'axios'
+import { useAuthStore } from '@/stores/auth.js';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-const API_USER = import.meta.env.VITE_API_USER
-const API_PASS = import.meta.env.VITE_API_PASS
+/* const API_USER = import.meta.env.VITE_API_USER
+const API_PASS = import.meta.env.VITE_API_PASS */
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  auth: API_USER && API_PASS ? { username: API_USER, password: API_PASS } : undefined
-})
+ })
+
+axiosInstance.interceptors.request.use((config) => {
+  const authStore = useAuthStore();
+  const token = authStore.user?.access_token; // Obtener el token desde Pinia
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 export function useApi() {
   const data = ref(null)

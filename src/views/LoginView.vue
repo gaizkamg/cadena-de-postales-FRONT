@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
-    <h1>Iniciar Sesión</h1>
-    <form @submit.prevent="handleLogin">
+    <h1>Iniciar Sesión 2</h1>
+    <form @submit.prevent="console.log('Formulario enviado'); handleLogin">
       <div>
         <label for="email">Correo Electrónico</label>
         <input type="email" id="email" v-model="email" required />
@@ -10,7 +10,7 @@
         <label for="password">Contraseña</label>
         <input type="password" id="password" v-model="password" required />
       </div>
-      <button type="submit">Iniciar Sesión</button>
+      <button type="submit" @click="console.log('Botón de login clicado')">Iniciar Sesión</button>
     </form>
     <p v-if="error" class="error">{{ error }}</p>
   </div>
@@ -21,7 +21,7 @@ import { ref } from 'vue'
 import { useApi } from '@/composables/useApi.js'
 import { useRouter } from 'vue-router'
 
-const { postData } = useApi()
+const { fetchData } = useApi()
 const router = useRouter()
 
 const email = ref('')
@@ -29,9 +29,17 @@ const password = ref('')
 const error = ref(null)
 
 const handleLogin = async () => {
+  console.log('handleLogin ejecutado');
   try {
-    const response = await postData('/api/auth/login', { email: email.value, contrasena: password.value })
+    console.log('Enviando solicitud de login...')
+    console.log('Datos enviados al backend:', { email: email.value, contrasena: password.value });
+    const response = await fetchData(`/api/auth/login?email=${email.value}&contrasena=${password.value}`)
+    console.log('Respuesta completa del backend:', response);
+
     const { token, rol_id } = response.data
+    if (!token || !rol_id) {
+      throw new Error('Respuesta del backend incompleta')
+    }
 
     localStorage.setItem('token', token) // Guardar el token en localStorage
 
@@ -42,7 +50,8 @@ const handleLogin = async () => {
       router.push('/dashboard') // Usuario normal
     }
   } catch (err) {
-    error.value = 'Credenciales incorrectas. Inténtalo de nuevo.'
+    console.error('Error durante el login:', err)
+    error.value = 'Credenciales incorrectas o error en el servidor. Inténtalo de nuevo.'
   }
 }
 </script>

@@ -66,7 +66,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function updateProfile(updatedUser) {
     try {
       const { putData } = useApi()
-      const response = await putData(`http://localhost:3000/users/${updatedUser.id}`, updatedUser)
+      const response = await putData(`${API_BASE_URL}/users/${updatedUser.id}`, updatedUser)
       user.value = response.data
       sessionStorage.setItem('user', JSON.stringify(response.data))
       return true
