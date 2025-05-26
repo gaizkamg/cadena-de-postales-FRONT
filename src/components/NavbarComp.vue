@@ -12,16 +12,57 @@
     <div v-if="showRegister" class="modal">
       <div class="modal-content">
         <span class="close" @click="closeModals">&times;</span>
-        <h2>Registro Cuenta Usuario</h2>
+        <form @submit.prevent="submitForm">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" v-model="form.nombre" type="text" placeholder="Nombre" />
+
+        <label for="apellido">Apellido</label>
+        <input id="apellido" v-model="form.apellido" type="text" placeholder="Apellido" />
+
+        <label for="dedicacion">¿A qué te dedicas en Peñascal Kooperatiba?</label>
+        <select id="dedicacion" v-model="form.dedicacion">
+          <option disabled value="">Selecciona una opción</option>
+          <option>Estudio</option>
+          <option>Trabajo</option>
+        </select>
+
+        <label for="centro">¿En qué centro formativo sueles estar?</label>
+        <select id="centro" v-model="form.centro">
+          <option disabled value="">Selecciona un centro</option>
+          <option>Boluetabarri / Modo - Comercio</option>
+          <option>Boluetabarri / Informática</option>
+          <option>Boluetabarri / Climatización - Fontanería</option>
+          <option>Boluetabarri / Madera</option>
+          <option>Boluetabarri / Hostalería</option>
+          <option>Boluetabarri / Administración</option>
+          <option>Boluetabarri / Complementaria</option>
+          <option>Montaño / Hostalería</option>
+          <option>Montaño / Construcción - Electricidad</option>
+          <option>Belategi / Metal</option>
+          <option>Tolosa</option>
+          <option>Sarrikue</option>
+          <option>Markina</option>
+          <option>Errenteria</option>
+          <option>Intervención Social Bizkaia</option>
+          <option>EPA Gipuzkoa</option>
+          <option>EPA Bizkaia</option>
+        </select>
+
+        <label for="linguistico">¿Perteneces a un grupo de refuerzo lingüístico?</label>
+        <select id="linguistico" v-model="form.linguistico">
+          <option disabled value="">Selecciona una opción</option>
+          <option>Sí</option>
+          <option>No</option>
+        </select>
+
         <label for="email">Email</label>
-        <input id="email" type="email" placeholder="email" />
+        <input id="email" v-model="form.email" type="email" placeholder="Email" required />
+
         <label for="password">Password</label>
-        <input id="password" type="text" placeholder="password" />
-        <button class="registro-btn">Registrar</button>
-        <p class="switch-text">
-          ¿Ya tienes cuenta?
-          <a href="#" @click.prevent="switchToLogin">Login</a>
-        </p>
+        <input id="password" v-model="form.password" type="password" placeholder="Password" required />
+
+        <button type="submit" class="registro-btn">Registrar</button>
+      </form>
       </div>
     </div>
 
@@ -46,30 +87,58 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
-const showRegister = ref(false);
-const showLogin = ref(false);
+const showRegister = ref(false)
+const showLogin = ref(false)
+const authStore = useAuthStore()
 
 function openRegister() {
-  showRegister.value = true;
-  showLogin.value = false;
+  showRegister.value = true
+  showLogin.value = false
 }
 function openLogin() {
-  showLogin.value = true;
-  showRegister.value = false;
+  showLogin.value = true
+  showRegister.value = false
 }
 function closeModals() {
-  showLogin.value = false;
-  showRegister.value = false;
+  showLogin.value = false
+  showRegister.value = false
 }
 function switchToLogin() {
-  showRegister.value = false;
-  showLogin.value = true;
+  showRegister.value = false
+  showLogin.value = true
 }
 function switchToRegister() {
-  showLogin.value = false;
-  showRegister.value = true;
+  showLogin.value = false
+  showRegister.value = true
+}
+
+const form = ref({
+  nombre: '',
+  apellido: '',
+  dedicacion: '',
+  centro: '',
+  linguistico: '',
+  email: '',
+  password: ''
+})
+
+const submitForm = async () => {
+  // Aquí deberías llamar a tu store o API para registrar
+  await authStore.register(form.value)
+  closeModals()
+  // Limpia el formulario
+  form.value = {
+    nombre: '',
+    apellido: '',
+    dedicacion: '',
+    centro: '',
+    linguistico: '',
+    email: '',
+    password: ''
+  }
 }
 </script>
 
