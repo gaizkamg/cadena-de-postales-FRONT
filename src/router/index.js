@@ -16,7 +16,8 @@ const routes = [
       { path: '', name: 'home', component: HomeView },
       { path: 'dashboard', name: 'dashboard', component: DashboardView, meta: { requiresAuth: true } },
       { path: 'admin', name: 'admin', component: AdminView, meta: { requiresAuth: true } },
-      { path: 'register', name: 'register', component: UserFormView, meta: { requiresAuth: true } },
+      { path: 'register', name: 'register', component: UserFormView },
+      { path: 'login', name: 'login', component: LoginView },
       { path: 'info', name: 'info', component: InfoView},
       
 
