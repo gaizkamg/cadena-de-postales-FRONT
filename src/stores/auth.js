@@ -31,12 +31,20 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const { postData } = useApi()
       const response = await postData(`${API_BASE_URL}/api/auth/login`, { email, contrasena: password })
-      const userData = response.data
+      const data = response.data
 
-      if (userData) {
+      if (data && data.access_token && data.rol) {
+        // Adaptar los nombres para el frontend
+        const userData = {
+          token: data.access_token,
+          rol_id: data.rol,
+          id: data.usuario_id,
+          mensaje: data.mensaje
+        }
         user.value = userData
         isAuthenticated.value = true
         sessionStorage.setItem('user', JSON.stringify(userData))
+        localStorage.setItem('token', userData.token)
         return true
       }
       return false
@@ -80,6 +88,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     isAuthenticated.value = false
     sessionStorage.removeItem('user')
+    localStorage.removeItem('token') // Elimina el token al cerrar sesión
   }
 
   // Exponemos lo que queremos que otros usen

@@ -1,63 +1,14 @@
 <template>
-  <div class="login-container">
-    <h1>Iniciar Sesión 2</h1>
-    <form @submit.prevent="console.log('Formulario enviado'); handleLogin">
-      <div>
-        <label for="email">Correo Electrónico</label>
-        <input type="email" id="email" v-model="email" required />
-      </div>
-      <div>
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" v-model="password" required />
-      </div>
-      <button type="submit" @click="console.log('Botón de login clicado')">Iniciar Sesión</button>
-    </form>
-    <p v-if="error" class="error">{{ error }}</p>
-  </div>
+  <LoginComp />
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useApi } from '@/composables/useApi.js'
-import { useRouter } from 'vue-router'
-
-const { fetchData } = useApi()
-const router = useRouter()
-
-const email = ref('')
-const password = ref('')
-const error = ref(null)
-
-const handleLogin = async () => {
-  console.log('handleLogin ejecutado');
-  try {
-    console.log('Enviando solicitud de login...')
-    console.log('Datos enviados al backend:', { email: email.value, contrasena: password.value });
-    const response = await fetchData(`/api/auth/login?email=${email.value}&contrasena=${password.value}`)
-    console.log('Respuesta completa del backend:', response);
-
-    const { token, rol_id } = response.data
-    if (!token || !rol_id) {
-      throw new Error('Respuesta del backend incompleta')
-    }
-
-    localStorage.setItem('token', token) // Guardar el token en localStorage
-
-    // Redirigir según el rol del usuario
-    if (rol_id === 1) {
-      router.push('/admin') // Administrador o Responsable
-    } else {
-      router.push('/dashboard') // Usuario normal
-    }
-  } catch (err) {
-    console.error('Error durante el login:', err)
-    error.value = 'Credenciales incorrectas o error en el servidor. Inténtalo de nuevo.'
-  }
-}
+import LoginComp from '@/components/LoginComp.vue'
 </script>
 
 <style scoped>
 .login-container {
+color: black;
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;

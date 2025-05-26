@@ -43,7 +43,9 @@ export function useApi() {
   const postData = async (url, payload) => {
     loading.value = true
     try {
-      const response = await axios.post(API_BASE_URL + url, payload)
+      // Si la url ya empieza por http, no le añadas el base
+      const fullUrl = url.startsWith('http') ? url : API_BASE_URL + url;
+      const response = await axios.post(fullUrl, payload)
       data.value = response.data
       return response
     } catch (err) {

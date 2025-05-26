@@ -70,12 +70,7 @@
     <div v-if="showLogin" class="modal">
       <div class="modal-content">
         <span class="close" @click="closeModals">&times;</span>
-        <h2>Login Form</h2>
-        <label for="login-email">Email</label>
-        <input id="login-email" type="email" placeholder="Email" />
-        <label for="login-password">Password</label>
-        <input id="login-password" type="password" placeholder="Password" />
-        <button class="login-btn">Login</button>
+        <LoginComp @login-success="closeModals" />
         <!-- Switch to Registro -->
         <p class="switch-text">
           ¿No tienes cuenta?
@@ -89,6 +84,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import LoginComp from '@/components/LoginComp.vue';
 
 const showRegister = ref(false)
 const showLogin = ref(false)

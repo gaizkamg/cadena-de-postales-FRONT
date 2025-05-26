@@ -6,6 +6,7 @@ import DashboardView from '@/views/DashboardView.vue';
 import AdminView from '@/views/AdminView.vue';
 import UserFormView from '@/views/UserFormView.vue';
 import InfoView from '@/views/InfoView.vue';
+import LoginView from '@/views/LoginView.vue';
 
 
 const routes = [
