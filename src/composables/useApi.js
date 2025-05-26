@@ -85,18 +85,13 @@ export function useApi() {
   }
 
   const fetchUsers = async () => {
-    try {
-      const response = await axiosInstance.get('/api/usuarios')
-      return response.data
-    } catch (err) {
-      console.error('Error fetching users:', err)
-      throw err
-    }
+    const { data } = await axios.get('/api/users')
+    return data
   }
 
   const patchUser = async (userId, payload) => {
     try {
-      const response = await axiosInstance.patch(`/api/usuarios/${userId}`, payload)
+      const response = await axiosInstance.patch(`/api/users/${userId}`, payload)
       return response.data
     } catch (err) {
       console.error('Error patching user:', err)

@@ -29,7 +29,7 @@ const datosUsuarios = ref(null)
 
 const cargarDatosMatch = async () => {
   try {
-    const { data } = await axios.get('/api/match')  // endpoint GET datos match
+    const { data } = await axios.get('/api/emparejamientos/lista')  // endpoint GET datos match
     datosMatch.value = data
   } catch (error) {
     console.error('Error cargando datos match:', error)

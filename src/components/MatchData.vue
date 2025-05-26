@@ -1,6 +1,5 @@
 <template>
   <div class="match-box">
-      <img :src="matchImage" alt="Encabezado amigo postal" class="header-image" />
     <h2>Datos de tu  amigo postal</h2>
 
     <div class="campo">
