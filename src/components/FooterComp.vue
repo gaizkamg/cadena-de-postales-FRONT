@@ -15,7 +15,6 @@
   padding: 1rem;
   color: #fcfdfc;
   text-align: center;
-  z-index: 1000;
   box-sizing: border-box;
 }
 </style>

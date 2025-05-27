@@ -111,6 +111,7 @@ const guardarCambios = async () => {
     alert(modo.value === 'registro' ? 'Registro exitoso.' : 'Datos guardados correctamente.');
   } catch (error) {
     console.error('Error al guardar:', error.response?.data || error.message); // Mostrar detalles del error
+    console.error('Detalles del error:', error.response?.data); // Log para inspeccionar detalles del error
     alert('Error guardando datos. Por favor, revisa los datos e inténtalo de nuevo.')
   }
 };
