@@ -23,7 +23,7 @@ import FooterComp from '@/components/FooterComp.vue'
   flex: 1;
   display: flex;
   flex-direction: column;
-  background:radial-gradient(circle,rgb(110, 255, 171) 20%, rgb(163, 243, 189) 51%, rgb(250, 187, 62) 100%);
+  background:radial-gradient(circle,rgb(179, 255, 211) 20%, rgb(163, 243, 189) 51%, rgb(255, 211, 124) 100%);
 
 }
 </style>
