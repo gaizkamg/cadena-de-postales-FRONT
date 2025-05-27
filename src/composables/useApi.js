@@ -29,7 +29,7 @@ export function useApi() {
   const fetchData = async (url) => {
     loading.value = true
     try {
-      const response = await axios.get(API_BASE_URL + url)
+      const response = await axiosInstance.get(url)
       data.value = response.data
       return response
     } catch (err) {
@@ -43,9 +43,8 @@ export function useApi() {
   const postData = async (url, payload) => {
     loading.value = true
     try {
-      // Si la url ya empieza por http, no le añadas el base
-      const fullUrl = url.startsWith('http') ? url : API_BASE_URL + url;
-      const response = await axios.post(fullUrl, payload)
+      const fullUrl = url.startsWith('http') ? url : url;
+      const response = await axiosInstance.post(fullUrl, payload)
       data.value = response.data
       return response
     } catch (err) {
@@ -59,7 +58,7 @@ export function useApi() {
   const putData = async (url, payload) => {
     loading.value = true
     try {
-      const response = await axios.put(API_BASE_URL + url, payload)
+      const response = await axiosInstance.put(url, payload)
       data.value = response.data
       return response
     } catch (err) {
@@ -73,7 +72,7 @@ export function useApi() {
   const deleteData = async (url) => {
     loading.value = true
     try {
-      const response = await axios.delete(API_BASE_URL + url)
+      const response = await axiosInstance.delete(url)
       data.value = response.data
       return response
     } catch (err) {

@@ -84,6 +84,7 @@ const form = ref({
   centro: '',
   linguistico: '',
 })
+const modo = ref('actualizacion'); // Puede ser 'registro' o 'actualizacion'
 
 // Función para cargar datos del usuario desde API
 const cargarDatosUsuario = async () => {
@@ -98,22 +99,31 @@ const cargarDatosUsuario = async () => {
 // Función para guardar cambios en API
 const guardarCambios = async () => {
   try {
-    await axios.put('/api/usuario', form.value)  // endpoint PUT usuario
-    editable.value = false
-    alert('Datos guardados correctamente.')
+    console.log('Datos enviados:', form.value); // Log para depurar datos enviados
+    const endpoint = modo.value === 'registro' ? '/api/auth/register' : '/api/usuario';
+    const response = await axios({
+      method: modo.value === 'registro' ? 'post' : 'put',
+      url: endpoint,
+      data: form.value,
+    });
+    console.log('Respuesta del servidor:', response.data); // Log para depurar respuesta
+    editable.value = false;
+    alert(modo.value === 'registro' ? 'Registro exitoso.' : 'Datos guardados correctamente.');
   } catch (error) {
-    console.error('Error al guardar:', error)
-    alert('Error guardando datos.')
+    console.error('Error al guardar:', error.response?.data || error.message); // Mostrar detalles del error
+    alert('Error guardando datos. Por favor, revisa los datos e inténtalo de nuevo.')
   }
-}
+};
 
 const editar = () => {
   editable.value = true
 }
 
 onMounted(() => {
-  cargarDatosUsuario()
-})
+  if (modo.value === 'actualizacion') {
+    cargarDatosUsuario();
+  }
+});
 </script>
 
 <style scoped>
