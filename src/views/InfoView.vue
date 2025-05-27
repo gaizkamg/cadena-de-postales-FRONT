@@ -196,4 +196,105 @@
   margin-top: 15px;
 }
 
+.cta-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.participation-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1a3e72;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.info-section {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #1a3e72;
+}
+
+/* Estilos base para todas las listas */
+.points, .points-list {
+  list-style: none;
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+/* Estilos para los elementos de lista */
+.points li, .points-list li {
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #444;
+}
+
+/* Marcadores para las listas */
+.points li::before {
+  content: "-";
+  color: #2c6fdb;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.points-list li::before {
+  content: "•";
+  color: #2c6fdb;
+  font-size: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.participant-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+  gap: 10px;
+}
+
+.participant-block .subtitle {
+  font-weight: 600;
+  color: #222;
+  width: 180px;
+  text-align: center;
+}
+
+.participant-block .note {
+  font-size: 14px;
+  color: #555;
+  flex: 1;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.example-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
 </style>
