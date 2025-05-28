@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="card">
-      <UserFormView />
+      <UserFormComp />
     </div>
     <div class="card">
       <MatchData v-if="datosMatch" :match="datosMatch" />
@@ -11,25 +11,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import UserFormView from '@/views/UserFormView.vue'
-import MatchData from '@/components/MatchData.vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue';
+import UserFormComp from '@/components/UserFormComp.vue';
+import MatchData from '@/components/MatchData.vue';
+import axios from 'axios';
 
-const datosMatch = ref(null)
+const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
-    const { data } = await axios.get('/api/match')  // endpoint GET datos match
-    datosMatch.value = data
+    const { data } = await axios.get('/api/match');
+    datosMatch.value = data;
   } catch (error) {
-    console.error('Error cargando datos match:', error)
+    console.error('Error cargando datos match:', error);
   }
-}
+};
 
 onMounted(() => {
-  cargarDatosMatch()
-})
+  cargarDatosMatch();
+});
 </script>
 <style scoped>
 .dashboard-container {
