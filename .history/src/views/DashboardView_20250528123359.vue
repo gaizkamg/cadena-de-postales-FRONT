@@ -62,7 +62,6 @@ onMounted(() => {
 <style scoped>
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
   justify-content: center;
   gap: 30px;
   padding: 30px;
@@ -71,61 +70,32 @@ onMounted(() => {
 }
 
 .card {
-  height: 65vh;
-  width: 450px;
-  min-width: 450px;
+  height: 65vh; /* Altura fija igual para todas */
+  width: 350px; /* Ancho un poco más reducido */
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 25px;
+  padding: 20px;
   background: white;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
+  flex-shrink: 0; /* Evita que se reduzcan desproporcionadamente */
 }
 
-/* Versión Tablet - 2 columnas */
-@media (max-width: 1200px) {
+/* Responsive */
+@media (max-width: 1024px) {
   .dashboard-container {
-    gap: 20px;
+    flex-wrap: wrap;
   }
-  .card {
-    width: calc(50% - 40px); /* 2 cards por fila */
-    min-width: unset;
-    max-width: 100%;
-    height: 60vh;
-  }
-}
-
-/* Versión Móvil - 1 columna */
-@media (max-width: 768px) {
-  .dashboard-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    gap: 20px;
-  }
-  
   .card {
     width: 100%;
-    min-width: unset;
+    max-width: 350px;
+    height: 55vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
     height: auto;
-    max-height: none;
-    padding: 20px;
+    max-height: 60vh;
   }
-  
-  /* Asegurar que todas las cards sean visibles */
-  .card:last-child {
-    margin-bottom: 20px;
-  }
-}
-
-/* Contenido interno responsive */
-.card h2 {
-  font-size: clamp(1.2rem, 2vw, 1.4rem);
-}
-
-.card pre {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 </style>

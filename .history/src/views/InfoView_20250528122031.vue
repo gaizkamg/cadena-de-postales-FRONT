@@ -38,16 +38,19 @@
 
     <section class="info-section">
       <h2 class="title">¿Cómo funciona la "Cadena de Postales"?</h2>
+      
       <p>1: Escribir una postal</p>
       <ul class="points">
         <li>El tema es: <strong>"Mis planes de futuro"</strong></li>
         <li>Escribir el mensaje de forma clara y cuidada</li>
         <li>Se realiza una presentación (quién soy, dónde estudio o trabajo...)</li>
       </ul>
+      
       <p>2: Enviar la postal</p>
       <ul class="points">
         <li>Una persona de referencia en cada sector / centro se encargará de recoger las postales.</li>
       </ul>
+      
       <p>3: Recibir una respuesta</p>
       <ul class="points">
         <li>La persona que recibe la postal deberá leerla y responder en un plazo de una semana</li>
@@ -61,6 +64,7 @@
         La iniciativa está abierta a todas las personas que forman parte de Peñascal, fomentando la conexión y la
         comunicación entre diferentes miembros de la comunidad.
       </p>
+
       <div class="participant-block">
         <div class="block">
           <h3 class="subtitle">Alumnado</h3>
@@ -69,10 +73,12 @@
             Que no estén de prácticas u otras actividades externas.
           </p>
         </div>
+
         <div class="block">
           <h3 class="subtitle">Profesorado y personal del centro</h3>
           <p class="note">Animamos a participar a todo el personal interesado.</p>
         </div>
+
         <div class="block">
           <h3 class="subtitle">Requisitos</h3>
           <ul class="points">
@@ -81,7 +87,9 @@
           </ul>
         </div>
       </div>
-      <p>El grupo motor de personas que comienzan redactando postales son aquellas que están en REFUERZO LINGÜÍSTICO</p>
+
+      <p>El grupo motor de personas que comienzan redactando postales son aquellas que están en
+      REFUERZO LINGÜÍSTICO</p>
     </section>
 
     <section class="info-section">
@@ -98,6 +106,7 @@
         <li>Mensaje: <em>(Explicamos lo que hemos hecho en vacaciones)</em></li>
         <li>Despedida: <em>"Espero que tú también hayas disfrutado de tus vacaciones, un abrazo"</em></li>
       </ul>
+
       <ul class="points">
         <li>Escribir con letra clara y frases sencillas.</li>
         <li>Respetar la ortografía dentro de lo posible.</li>
@@ -110,7 +119,7 @@
 <script setup>
 </script>
 
-<style scoped>
+<style>
 .container {
   display: grid;
   grid-template-columns: 1fr;
@@ -133,14 +142,14 @@
   text-align: center;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #117211;
+  color: #1a3e72;
 }
 
 .subtitle {
   font-size: 18px;
   font-weight: 600;
   margin-top: 15px;
-  color: #117211;
+  color: #1a3e72;
 }
 
 /* Listas personalizadas */
@@ -160,7 +169,7 @@
 
 .points li::before {
   content: "-";
-  color: #117211;
+  color: #2c6fdb;
   position: absolute;
   left: 0;
   font-weight: bold;
@@ -168,14 +177,14 @@
 
 .points-list li::before {
   content: "•";
-  color: #117211;
+  color: #2c6fdb;
   font-size: 20px;
   position: absolute;
   left: 0;
   top: 0;
 }
 
-/* Participantes */
+/* Participantes - Grid Responsive */
 .participant-block {
   display: grid;
   grid-template-columns: 1fr;
@@ -212,9 +221,13 @@
     grid-template-columns: repeat(2, 1fr);
   }
   
-  /* Asegurar que todas las secciones se distribuyan en 2 columnas */
-  .info-section {
-    grid-column: auto; /* Cada sección ocupará una celda del grid */
+  /* Hacer que algunas secciones ocupen 2 columnas */
+  .info-section:nth-child(1),
+  .info-section:nth-child(2),
+  .info-section:nth-child(5),
+  .info-section:nth-child(6),
+  .info-section:nth-child(7) {
+    grid-column: span 2;
   }
 }
 </style>

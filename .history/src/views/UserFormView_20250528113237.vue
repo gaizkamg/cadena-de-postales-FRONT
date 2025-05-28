@@ -136,7 +136,7 @@ onMounted(() => {
 .form-box {
   padding: 40px 30px;
   border-radius: 12px;
-  width: 300px;
+  width: 400px;
   text-align: left;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -144,7 +144,7 @@ onMounted(() => {
 .form-box label {
   margin-top: 20px;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 600;
   color: #333;
   display: block;
 }

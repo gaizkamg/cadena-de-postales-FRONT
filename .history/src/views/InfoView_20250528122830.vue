@@ -110,7 +110,7 @@
 <script setup>
 </script>
 
-<style scoped>
+<style>
 .container {
   display: grid;
   grid-template-columns: 1fr;
@@ -160,7 +160,7 @@
 
 .points li::before {
   content: "-";
-  color: #117211;
+  color: #2c6fdb;
   position: absolute;
   left: 0;
   font-weight: bold;
@@ -168,7 +168,7 @@
 
 .points-list li::before {
   content: "•";
-  color: #117211;
+  color: #2c6fdb;
   font-size: 20px;
   position: absolute;
   left: 0;

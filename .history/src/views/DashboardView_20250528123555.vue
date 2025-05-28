@@ -62,7 +62,6 @@ onMounted(() => {
 <style scoped>
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
   justify-content: center;
   gap: 30px;
   padding: 30px;
@@ -71,61 +70,61 @@ onMounted(() => {
 }
 
 .card {
-  height: 65vh;
-  width: 450px;
-  min-width: 450px;
+  height: 65vh; /* Mantenemos altura fija */
+  width: 450px; /* Aumentamos el ancho (antes 350px) */
+  min-width: 450px; /* Forzamos el ancho mínimo */
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 25px;
+  padding: 25px; /* Aumentamos padding */
   background: white;
   flex-shrink: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Mejor organización interna */
 }
 
-/* Versión Tablet - 2 columnas */
+/* Ajustamos el contenido para aprovechar el nuevo espacio */
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+.card pre {
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+/* Responsive para pantallas más grandes */
+@media (min-width: 1600px) {
+  .card {
+    width: 500px;
+    min-width: 500px;
+  }
+}
+
+/* Ajustes para tablet */
 @media (max-width: 1200px) {
   .dashboard-container {
-    gap: 20px;
+    flex-wrap: wrap;
   }
   .card {
-    width: calc(50% - 40px); /* 2 cards por fila */
-    min-width: unset;
-    max-width: 100%;
+    width: 100%;
+    min-width: 400px;
+    max-width: 400px;
     height: 60vh;
   }
 }
 
-/* Versión Móvil - 1 columna */
+/* Ajustes para móvil */
 @media (max-width: 768px) {
-  .dashboard-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    gap: 20px;
-  }
-  
   .card {
-    width: 100%;
-    min-width: unset;
+    min-width: 100%;
     height: auto;
-    max-height: none;
+    max-height: 70vh;
     padding: 20px;
   }
-  
-  /* Asegurar que todas las cards sean visibles */
-  .card:last-child {
-    margin-bottom: 20px;
-  }
-}
-
-/* Contenido interno responsive */
-.card h2 {
-  font-size: clamp(1.2rem, 2vw, 1.4rem);
-}
-
-.card pre {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 </style>

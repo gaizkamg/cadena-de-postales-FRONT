@@ -144,7 +144,7 @@ onMounted(() => {
 .form-box label {
   margin-top: 20px;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   color: #333;
   display: block;
 }

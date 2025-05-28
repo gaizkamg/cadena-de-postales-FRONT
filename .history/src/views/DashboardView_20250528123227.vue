@@ -62,70 +62,70 @@ onMounted(() => {
 <style scoped>
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
   justify-content: center;
+  align-items: flex-start; /* Cambiado de stretch a flex-start */
   gap: 30px;
-  padding: 30px;
+  padding: 30px 20px;
   background-color: #f2f2f2;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px); /* Ajuste para altura total */
 }
 
 .card {
-  height: 65vh;
-  width: 450px;
-  min-width: 450px;
+  max-height: 70vh; /* Reducido de 80vh */
+  height: auto; /* Altura automática según contenido */
+  min-height: 300px; /* Altura mínima para mantener consistencia */
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  background: white;
-  flex-shrink: 0;
+  padding: 20px; /* Reducido de 30px */
+  width: 380px; /* Ligeramente reducido */
   display: flex;
   flex-direction: column;
+  background: white; /* Fondo blanco para mejor contraste */
 }
 
-/* Versión Tablet - 2 columnas */
-@media (max-width: 1200px) {
+.card h2 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.card pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 14px;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Responsive para tablets */
+@media (max-width: 1024px) {
   .dashboard-container {
-    gap: 20px;
+    flex-wrap: wrap;
   }
   .card {
-    width: calc(50% - 40px); /* 2 cards por fila */
-    min-width: unset;
-    max-width: 100%;
-    height: 60vh;
+    width: 100%;
+    max-width: 400px;
+    max-height: 50vh;
   }
 }
 
-/* Versión Móvil - 1 columna */
+/* Responsive para móviles */
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
     align-items: center;
-    padding: 15px;
     gap: 20px;
+    padding: 20px 10px;
   }
-  
   .card {
     width: 100%;
-    min-width: unset;
-    height: auto;
+    max-width: 100%;
+    min-height: auto;
     max-height: none;
-    padding: 20px;
   }
-  
-  /* Asegurar que todas las cards sean visibles */
-  .card:last-child {
-    margin-bottom: 20px;
-  }
-}
-
-/* Contenido interno responsive */
-.card h2 {
-  font-size: clamp(1.2rem, 2vw, 1.4rem);
-}
-
-.card pre {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 </style>

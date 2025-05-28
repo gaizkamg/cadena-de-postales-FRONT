@@ -110,7 +110,7 @@
 <script setup>
 </script>
 
-<style scoped>
+<style sco>
 .container {
   display: grid;
   grid-template-columns: 1fr;
