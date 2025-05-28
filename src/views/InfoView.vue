@@ -87,7 +87,7 @@
 
   <section class="info-section ">
     <h2 class="title">Ejemplo de postal</h2>
-    <img src="@/assets/ejemplo de postal 1.png" alt="Ejemplo de postal" class="example-image" />
+    <img src="@/assets/img/ejemplo-postal.png" alt="Ejemplo de postal" class="example-image" />
   </section>
 
   <section class="info-section">

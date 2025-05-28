@@ -1,6 +1,8 @@
 <template>
   <header class="navbar">
-    <div class="logo"><a href="/">Cadena de Postales</a></div>
+    <div class="logo">
+      <a href="/"><img src="@/assets/img/logotipo-blanco.png" alt="" /></a>
+    </div>
     <nav class="menu">
       <a href="/">Home</a>
       <a href="/info">Cómo funciona</a>
@@ -47,6 +49,8 @@ import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import LoginComp from '@/components/LoginComp.vue';
 import UserFormView from '@/views/UserFormView.vue';
+
+
 
 const showRegister = ref(false)
 const showLogin = ref(false)
@@ -99,14 +103,22 @@ function handleLogout() {
 }
 
 .logo {
-  font-size: 24px;
+  width: 12%;
   font-weight: bold;
   cursor: pointer;
   transition: color 0.3s;
 }
 
-.logo:hover {
-  color: #fd7e14;
+.logo img {
+  width: 100%;
+}
+
+.logo-texto {
+  font-family: "Qwitcher Grypen", cursive;
+  font-weight: 900;
+  font-size: 6rem;
+  margin: 0 auto 0 -3px;
+
 }
 
 .menu {
