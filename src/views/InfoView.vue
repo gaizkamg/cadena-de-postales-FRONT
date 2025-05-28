@@ -1,109 +1,97 @@
 <template>
   <section class="info-section">
-    <h1 class="title">Objetivo de la dinámica</h1>
+    <h1 class="title">{{ $t('info-objetivo')}}</h1>
     <p class="description">
-      La iniciativa <strong>"Cadena de Postales"</strong> tiene como propósito fortalecer el aprendizaje del
-      castellano a través de la escritura manual, fomentando la expresión escrita, la creatividad y la
-      comunicación reflexiva entre los participantes.
-    </p>
-    <p>A través de esta dinámica se busca:</p>
+      {{ $t('info-iniciativa1')}}<strong>"Cadena de Postales"</strong> {{ $t('info-iniciativa2') }}</p>
+    <p>{{ $t('info-encabezado') }}</p>
     <ul class="points-list">
-      <li>Potenciar las habilidades lingüísticas (ortografía, redacción y caligrafía).</li>
-      <li>Estimular la memoria, la concentración y la asociación de ideas.</li>
-      <li>Favorecer la interacción entre todos los miembros de la comunidad educativa de Peñascal.</li>
-      <li>Crear lazos de comunidad y fortalecer el sentido de pertenencia.</li>
-      <li>Aumentar la autoestima y la confianza en quienes están aprendiendo el idioma.</li>
+      <li>{{ $t('info-potenciar') }}</li>
+      <li>{{ $t('info-estimular') }}</li>
+      <li>{{ $t('info-favorecer') }}</li>
+      <li>{{ $t('info-lazos') }}</li>
+      <li>{{ $t('info-autoestima') }}</li>
     </ul>
   </section>
 
   <section class="info-section">
-    <h2 class="title">Justificación de la dinámica</h2>
-    <p class="description">
-      En un contexto donde la comunicación digital predomina, la escritura manual sigue siendo una herramienta
-      fundamental para el desarrollo del pensamiento y la expresión.
-    </p>
-    <p><em>¿Por qué es importante esta dinámica?</em></p>
+    <h2 class="title">{{ $t('info-justificacion') }}</h2>
+    <p class="description">{{ $t('info-contexto') }}</p>
+    <p><em>{{ $t('info-importancia') }}</em></p>
     <ul class="points-list">
-      <li>Refuerza el aprendizaje del castellano mediante la práctica real y significativa de la escritura.</li>
-      <li>Promueve una comunicación más personal y reflexiva.</li>
-      <li>Ayuda a quienes están aprendiendo el idioma a expresarse con mayor confianza.</li>
-      <li>Tiene un impacto positivo en la integración social, especialmente en el alumnado extranjero.</li>
-      <li>Fomenta valores como la paciencia, la empatía y la responsabilidad, al requerir compromiso con la respuesta de la postal.</li>
+      <li>{{ $t('info-refuerza') }}</li>
+      <li>{{ $t('info-promueve') }}</li>
+      <li>{{ $t('info-ayuda') }}</li>
+      <li>{{ $t('info-impacto') }}</li>
+      <li>{{ $t('info-fomenta') }}</li>
     </ul>
     <p class="description-box">
-      Más que una simple carta, cada postal representa una oportunidad para aprender, conectar y construir comunidad dentro de Peñascal.
+      {{ $t('info-carta') }}
     </p>
   </section>
 
   <!-- Usa una estructura consistente para todas las secciones -->
   <section class="info-section">
-    <h2 class="title">¿Cómo funciona la "Cadena de Postales"?</h2>
+    <h2 class="title">{{ $t('info-funcionamiento') }}Cadena de Postales?</h2>
     
     <!-- Usa el mismo patrón para todas las listas -->
-    <p>1: Escribir una postal</p>
+    <p>1:  {{ $t('info-paso1') }}</p>
     <ul class="points">
-      <li>El tema es: <strong>"Mis planes de futuro"</strong></li>
-      <li>Escribir el mensaje de forma clara y cuidada</li>
-      <li>Se realiza una presentación (quién soy, dónde estudio o trabajo...)</li>
+      <li>{{ $t('info-tema1') }} <strong>"{{ $t('info-tema2') }}"</strong></li>
+      <li>{{ $t('info-escribir') }}</li>
+      <li>{{ $t('info-presentacion') }}</li>
     </ul>
     
-    <p>2: Enviar la postal</p>
+    <p>2: {{ $t('info-enviar') }}</p>
     <ul class="points">
-      <li>Una persona de referencia en cada sector / centro se encargará de recoger las postales.</li>
+      <li>{{ $t('info-recogida') }}.</li>
     </ul>
     
-    <p>3: Recibir una respuesta</p>
+    <p>3: {{ $t('info-respuesta') }}</p>
     <ul class="points">
-      <li>La persona que recibe la postal deberá leerla y responder en un plazo de una semana</li>
-      <li>El proceso se repite, fomentando la continuidad del intercambio</li>
+      <li>{{ $t('info-recibo') }}.</li>
+      <li>{{ $t('info-proceso') }}.</li>
     </ul>
   </section>
 
   <section class="info-section">
-    <h2 class="title">¿Quiénes pueden participar?</h2>
-    <p class="description">
-      La iniciativa está abierta a todas las personas que forman parte de Peñascal, fomentando la conexión y la
-      comunicación entre diferentes miembros de la comunidad.
-    </p>
+    <h2 class="title">{{ $t('info-quienes') }}?</h2>
+    <p class="description">{{ $t('info-apertura') }}</p>
 
     <div class="participant-block">
-      <h3 class="subtitle">Alumnado</h3>
-      <p class="note">
-        Importante que sea alumnado que esté <br>presente en el centro durante la dinámica, <br>que no estén de prácticas u otras<br> actividades externas.
-      </p>
-      <h3 class="subtitle">Profesorado y personal del centro</h3>
+      <h3 class="subtitle">{{ $t('info-alumnado') }}</h3>
+      <p class="note">{{ $t('info-importante') }}</p>
+      <h3 class="subtitle">{{ $t('info-profesorado') }}</h3>
     </div>
 
     <div>
-      <h3 class="subtitle">Requisitos</h3>
+      <h3 class="subtitle">{{ $t('info-requisitos') }}</h3>
       <ul class="points">
-        <li>Saber leer y escribir en cualquier nivel.</li>
-        <li>Comprometerse a responder la postal recibida en el tiempo establecido.</li>
+        <li>{{ $t('info-alfabetismo') }}.</li>
+        <li>{{ $t('info-compromiso') }}.</li>
       </ul>
     </div>
-    <p>El grupo motor de personas que comienzan redactando postales son aquellas que están en
-    REFUERZO LINGÜÍSTICO</p>
+    <p>{{ $t('info-inicio') }}</p>
   </section>
 
   <section class="info-section ">
-    <h2 class="title">Ejemplo de postal</h2>
+    <h2 class="title">{{ $t('info-ejemplo') }}</h2>
     <img src="@/assets/img/ejemplo-postal.png" alt="Ejemplo de postal" class="example-image" />
   </section>
 
   <section class="info-section">
-    <h2 class="title">Pautas para escribir una postal</h2>
-    <p>Estructura a seguir:</p>
+    <h2 class="title">{{ $t('info-pautas') }}</h2>
+    <p>{{ $t('info-estructura') }}:</p>
     <ul class="points-list">
-      <li>Saludo: <em>“¡Hola Paula! ¿Qué tal?”</em></li>
-      <li>Presentación: <em>“Soy Aitor, profesor de 2º de Soldadura de Belategi”</em></li>
-      <li>Mensaje: <em>(Explicamos lo que hemos hecho en vacaciones)</em></li>
-      <li>Despedida: <em>“Espero que tú también hayas disfrutado de tus vacaciones, un abrazo”</em></li>
+      <li>{{ $t('info-saludo1') }}: <em>“¡Hola Paula! ¿Qué tal?”</em></li>
+      <li>{{ $t('info-presentacion1') }}: <em>“Soy Aitor, profesor de 2º de Soldadura de Belategi”</em></li>
+      <li>{{ $t('info-mensaje1') }}: <em>({{ $t('info-mensaje2') }})</em></li>
+      <li>{{ $t('info-despedida1') }}: <em>“Espero que tú también hayas disfrutado de tus vacaciones, un abrazo”</em></li>
     </ul>
 
     <ul class="points">
-      <li>Escribir con letra clara y frases sencillas.</li>
-      <li>Respetar la ortografía dentro de lo posible.</li>
-      <li>Usar un tono amable y positivo.</li>
+      <li>{{ $t('info-escitura') }}.</li>
+      <li>{{ $t('info-respetar') }}.</li>
+      <li>{{ $t('info-amable') }}.</li>
     </ul>
   </section>
 </template>

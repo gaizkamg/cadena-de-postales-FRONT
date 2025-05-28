@@ -1,29 +1,29 @@
 <template>
   <div class="match-box">
-    <h2>Datos de tu  amigo postal</h2>
+    <h2>{{ $t('match-datos')}}</h2>
 
     <div class="campo">
-      <label>Nombre:</label>
+      <label>{{ $t('match-nombre')}}:</label>
       <p>{{ match.nombre }}</p>
     </div>
 
     <div class="campo">
-      <label>Apellido:</label>
+      <label>{{ $t('match-apellido')}}:</label>
       <p>{{ match.apellido }}</p>
     </div>
 
     <div class="campo">
-      <label>Dedicación:</label>
+      <label>{{ $t('match-dedicacion')}}:</label>
       <p>{{ match.dedicacion }}</p>
     </div>
 
     <div class="campo">
-      <label>Centro:</label>
+      <label>{{ $t('match-centro')}}:</label>
       <p>{{ match.centro }}</p>
     </div>
 
     <div class="campo">
-      <label>Grupo lingüístico:</label>
+      <label>{{ $t('match-grupo')}}:</label>
       <p>{{ match.linguistico }}</p>
     </div>
   </div>

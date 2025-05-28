@@ -1,16 +1,16 @@
 <template>
   <div class="login-container">
-    <h1>Iniciar Sesión</h1>
+    <h1>{{ $t('login-inicio')}}</h1>
     <form @submit.prevent="handleLogin">
       <div>
-        <label for="email">Correo Electrónico</label>
+        <label for="email">{{ $t('login-correo')}}</label>
         <input type="email" id="email" v-model="email" required />
       </div>
       <div>
-        <label for="password">Contraseña</label>
+        <label for="password">{{ $t('login-contraseña')}}</label>
         <input type="password" id="password" v-model="password" required />
       </div>
-      <button type="submit" @click="console.log('Botón de login clicado')">Iniciar Sesión</button>
+      <button type="submit" @click="console.log('Botón de login clicado')">{{ $t('login-inicio')}}</button>
     </form>
     <p v-if="error" class="error">{{ error }}</p>
   </div>

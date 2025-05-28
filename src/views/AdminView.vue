@@ -1,18 +1,18 @@
 <template>
   <div class="admin-container">
-    <h1>ADMIN VIEW</h1>
+    <h1>{{ $t('admin-titulo') }}</h1>
     <div>
-      <h2>Gestión de Usuarios</h2>
+      <h2>{{ $t('admin-gestion') }}</h2>
       <ul>
         <li v-for="usuario in usuarios" :key="usuario.id">
           {{ usuario.nombre }} {{ usuario.apellido }}
-          <button @click="editarUsuario(usuario.id)">Editar</button>
+          <button @click="editarUsuario(usuario.id)">{{ $t('admin-editar') }}</button>
         </li>
       </ul>
     </div>
     <div>
-      <h2>Generar Emparejamientos</h2>
-      <button @click="generarEmparejamientos">Generar</button>
+      <h2>{{ $t('admin-emparejamientos') }}</h2>
+      <button @click="generarEmparejamientos">{{ $t('admin-generar') }}</button>
     </div>
   </div>
 </template>

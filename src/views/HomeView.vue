@@ -2,16 +2,16 @@
                 <div class="hero">
                         <div class="img-hero"></div>
                         <div class="text-hero">
-                                <h1>Bienvenido a <span class="logo-texto">Cadena de Postales</span></h1>
+                                <h1>{{ $t('bienvenido-a') }} <span class="logo-texto">Cadena de Postales</span></h1>
                                 <p class="subheading">
-        📬 Practica y mejora tu español intercambiando cartas manuscritas llenas de emoción y aprendizaje.
+        📬 {{ $t('home-practica-intro') }}
       </p>
         <p class="description">
-        La iniciativa <strong>Cadena de Postales</strong> tiene como propósito fortalecer el aprendizaje del castellano a través de la escritura manual, fomentando la expresión escrita, la creatividad y la comunicación reflexiva entre los participantes. 
+        {{ $t('home-intencion-intro1') }}<strong>Cadena de Postales</strong>{{ $t('home-intencion-intro2') }}
         <br /><br />
-        Una herramienta educativa y emocional que conecta a personas de distintos orígenes mediante el poder de las palabras.
+        {{ $t('home-intencion-intro3') }}
       </p>    <router-link to="/info" class="participation-link">
-      Conoce la dinámica
+      {{ $t('home-dinamica')}}
     </router-link>
                         </div>
                 </div>
@@ -20,9 +20,8 @@
 
 <script setup>
 
-
-
 </script>
+
 <style scoped>
  .hero {
         display: grid;

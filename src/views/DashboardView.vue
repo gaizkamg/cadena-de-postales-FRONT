@@ -5,12 +5,12 @@
     </div>
     <div class="card">
       <MatchData v-if="datosMatch" :match="datosMatch" />
-      <p v-else>Cargando datos...</p>
+      <p v-else>{{ $t('panel-carga') }}...</p>
     </div>
     <div class="card">
-      <h2>Datos de Usuarios</h2>
+      <h2>{{ $t('panel-usuarios') }}</h2>
       <pre v-if="datosUsuarios">{{ datosUsuarios }}</pre>
-      <p v-else>Cargando datos de usuarios...</p>
+      <p v-else>{{ $t('panel-datos') }}...</p>
     </div>
   </div>
 </template>

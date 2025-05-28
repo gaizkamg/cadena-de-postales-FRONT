@@ -3,16 +3,16 @@
     <div class="form-box">
       <h2>{{ modo === 'registro' ? 'Registro de Usuario' : 'Actualizar Datos' }}</h2>
       <form @submit.prevent="guardarCambios">
-        <label for="nombre">Nombre</label>
+        <label for="nombre">{{ $t('register-nombre') }}</label>
         <input id="nombre" v-model="form.nombre" type="text" placeholder="Nombre" />
 
-        <label for="apellido">Apellido</label>
+        <label for="apellido">{{ $t('register-apellido') }}</label>
         <input id="apellido" v-model="form.apellido" type="text" placeholder="Apellido" />
 
-        <label for="email">Correo Electrónico</label>
+        <label for="email">{{ $t('register-correo') }}</label>
         <input id="email" v-model="form.email" type="email" placeholder="Correo Electrónico" />
 
-        <label for="contrasena" v-if="modo === 'registro'">Contraseña</label>
+        <label for="contrasena" v-if="modo === 'registro'">{{ $t('register-contrasena') }}</label>
         <input
           id="contrasena"
           v-model="form.contrasena"
@@ -21,42 +21,42 @@
           v-if="modo === 'registro'"
         />
 
-        <label for="rol_id">Rol</label>
+        <label for="rol_id">{{ $t('register-rol') }}</label>
         <select id="rol_id" v-model="form.rol_id">
-          <option disabled value="">Selecciona un rol</option>
-          <option value="1">Administrador</option>
-          <option value="2">Usuario</option>
+          <option disabled value="">{{ $t('register-selec-rol') }}</option>
+          <option value="1">{{ $t('register-admin') }}</option>
+          <option value="2">{{ $t('register-usuario') }}</option>
         </select>
 
-        <label for="centro_id">Centro</label>
+        <label for="centro_id">{{ $t('register-centro') }}</label>
         <select id="centro_id" v-model="form.centro_id">
-          <option disabled value="">Selecciona un centro</option>
+          <option disabled value="">{{ $t('register-selec-centro') }}</option>
           <option value="1">Boluetabarri</option>
           <option value="2">Montaño</option>
           <option value="3">Belategi</option>
           <option value="4">Tolosa</option>
         </select>
 
-        <label for="sector_id">Sector</label>
+        <label for="sector_id">{{ $t('register-sector') }}</label>
         <select id="sector_id" v-model="form.sector_id">
-          <option disabled value="">Selecciona un sector</option>
-          <option value="1">Hostelería</option>
-          <option value="2">Construcción</option>
-          <option value="3">Metal</option>
+          <option disabled value="">{{ $t('register-selec-sector') }}</option>
+          <option value="1">{{ $t('register-hosteleria') }}</option>
+          <option value="2">{{ $t('register-construccion') }}</option>
+          <option value="3">{{ $t('register-metal') }}</option>
         </select>
 
-        <label for="linguistico">¿Perteneces a un grupo de refuerzo lingüístico?</label>
+        <label for="linguistico">{{ $t('register-pertenece') }}?</label>
         <select id="linguistico" v-model="form.refuerzo_linguistico">
-          <option disabled value="">Selecciona una opción</option>
-          <option :value="true">Sí</option>
-          <option :value="false">No</option>
+          <option disabled value="">{{ $t('register-selec-opcion') }}</option>
+          <option :value="true">{{ $t('register-si') }}</option>
+          <option :value="false">{{ $t('register-no') }}</option>
         </select>
 
-        <label for="penascal_rol">Rol en Peñascal</label>
+        <label for="penascal_rol">{{ $t('register-penascal') }}</label>
         <select id="penascal_rol" v-model="form.penascal_rol">
-          <option disabled value="">Selecciona un rol</option>
-          <option value="1">Estudiante</option>
-          <option value="2">Trabajador</option>
+          <option disabled value="">{{ $t('register-selec-penascal') }}</option>
+          <option value="1">{{ $t('register-estud') }}</option>
+          <option value="2">{{ $t('register-traba') }}</option>
         </select>
 
         <div class="botones">
