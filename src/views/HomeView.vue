@@ -2,7 +2,8 @@
                 <div class="hero">
                         <div class="img-hero"></div>
                         <div class="text-hero">
-                                <h1>Bienvenido a <span class="logo-texto">Cadena de Postales</span></h1>
+                                <h1>Bienvenido a </h1>
+                                <img src="@/assets/img/logotipo-blanco.png" alt="" />
                                 <p class="subheading">
         📬 Practica y mejora tu español intercambiando cartas manuscritas llenas de emoción y aprendizaje.
       </p>
@@ -38,8 +39,7 @@
         display: flex;
         flex-direction: column;
         padding: 3rem;
-
-        
+      
  }
 
  .text-hero .logo-texto {
