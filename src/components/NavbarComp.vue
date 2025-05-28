@@ -16,7 +16,7 @@
         <button class="login-btn" @click="handleLogout">Logout</button>
       </template>
       <template v-else>
-        <button class="registro-btn" @click="openRegister">Registro</button>
+        <a href="/register" class="registro-btn">Registro</a>
         <button class="login-btn" @click="openLogin">Login</button>
       </template>
     </nav>

@@ -27,56 +27,56 @@ export const useAuthStore = defineStore('auth', () => {
   // Función para login
   async function login(email, password) {
     try {
-      const { fetchData } = useApi() // Usamos el composable
+      const { postData } = useApi();
 
-      const response = await fetchData(`http://localhost:3000/users?email=${email}`)
-      const userData = response.data[0]
+      const response = await postData('/api/auth/login', { email, contrasena: password }); // Cambiar a POST para el login
+      const userData = response.data;
 
-      if (userData && userData.password === password) {
-        user.value = userData
-        isAuthenticated.value = true
-        sessionStorage.setItem('user', JSON.stringify(userData))
-        return true
+      if (userData) {
+        user.value = userData;
+        isAuthenticated.value = true;
+        sessionStorage.setItem('user', JSON.stringify(userData));
+        return true;
       }
-      return false
+      return false;
     } catch (error) {
-      console.error('Error de login:', error)
-      return false
+      console.error('Error de login:', error);
+      return false;
     }
   }
 
   // Función para registro
   async function register(name, email, password) {
     try {
-      const { fetchData, postData } = useApi()
-      const response = await fetchData(`http://localhost:3000/users?email=${email}`)
+      const { fetchData, postData } = useApi();
+      const response = await fetchData(`/api/usuarios?email=${email}`); // Ajustar al endpoint correcto
       if (response.data.length > 0) {
-        throw new Error('El usuario ya existe')
+        throw new Error('El usuario ya existe');
       }
 
-      const newUser = { name, email, password }
-      await postData('http://localhost:3000/users', newUser)
-      user.value = newUser
-      isAuthenticated.value = true
-      sessionStorage.setItem('user', JSON.stringify(newUser))
-      return true
+      const newUser = { name, email, password };
+      await postData('/api/usuarios', newUser); // Ajustar al endpoint correcto
+      user.value = newUser;
+      isAuthenticated.value = true;
+      sessionStorage.setItem('user', JSON.stringify(newUser));
+      return true;
     } catch (error) {
-      console.error('Error de registro:', error)
-      return false
+      console.error('Error de registro:', error);
+      return false;
     }
   }
 
   // Función para actualizar perfil
   async function updateProfile(updatedUser) {
     try {
-      const { putData } = useApi()
-      const response = await putData(`http://localhost:3000/users/${updatedUser.id}`, updatedUser)
-      user.value = response.data
-      sessionStorage.setItem('user', JSON.stringify(response.data))
-      return true
+      const { putData } = useApi();
+      const response = await putData(`/api/usuarios/${updatedUser.id}`, updatedUser); // Ajustar al endpoint correcto
+      user.value = response.data;
+      sessionStorage.setItem('user', JSON.stringify(response.data));
+      return true;
     } catch (error) {
-      console.error('Error al actualizar el perfil:', error)
-      return false
+      console.error('Error al actualizar el perfil:', error);
+      return false;
     }
   }
 

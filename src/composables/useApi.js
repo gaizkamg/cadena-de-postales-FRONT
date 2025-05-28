@@ -18,7 +18,7 @@ export function useApi() {
   const fetchData = async (url) => {
     loading.value = true
     try {
-      const response = await axios.get(API_BASE_URL + url)
+      const response = await axiosInstance.get(url) // Usar axiosInstance para evitar concatenación incorrecta
       data.value = response.data
       return response
     } catch (err) {

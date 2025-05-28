@@ -17,7 +17,7 @@ import FooterComp from '@/components/FooterComp.vue'
 .layout-col {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 75vh;
 }
 .main-content {
   flex: 1;

@@ -31,24 +31,73 @@ onMounted(() => {
   cargarDatosMatch();
 });
 </script>
+
 <style scoped>
 .dashboard-container {
   display: flex;
+  flex-wrap: wrap;  
   justify-content: center;
-  align-items: stretch;
-  gap: 40px;
-  padding: 60px 20px;
+  gap: 30px;
+  padding: 30px;
   background-color: #f2f2f2;
+  min-height: calc(100vh - 60px);
 }
 
 .card {
-  max-height: 80vh;     
-  overflow-y: auto;      
+  height: 65vh;
+  width: 450px;
+  min-width: 450px;
+  overflow-y: auto;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 1);
-  padding: 30px;
-  width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  background: white;
+  flex-shrink: 0;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+}
+
+ 
+@media (max-width: 1200px) {
+  .dashboard-container {
+    gap: 20px;
+  }
+  .card {
+    width: calc(50% - 40px);  
+    min-width: unset;
+    max-width: 100%;
+    height: 60vh;
+  }
+}
+
+ 
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    min-width: unset;
+    height: auto;
+    max-height: none;
+    padding: 20px;
+  }
+
+ 
+  .card:last-child {
+    margin-bottom: 20px;
+  }
+}
+ 
+.card h2 {
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+}
+
+.card pre {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 </style>
