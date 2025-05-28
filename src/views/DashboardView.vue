@@ -1,15 +1,20 @@
 <template>
-  <div class="dashboard-container">
-    <div class="card">
-      <UserFormComp />
+  <div class="dashboard-container" v-if="userData && userData.role">
+    <!-- Card 1: UserForm -->
+    <div class="card" v-if="userData.role === 2 || userData.role === 3">
+      <UserFormView />
     </div>
-    <div class="card">
+
+    <!-- Card 2: MatchData -->
+    <div class="card" v-if="userData.role === 2 || userData.role === 3">
       <MatchData v-if="datosMatch" :match="datosMatch" />
       <p v-else>Cargando datos...</p>
     </div>
-    <div class="card">
+
+    <!-- Card 3: UserDataComp (solo para rol 3) -->
+    <div class="card" v-if="userData.role === 3">
       <h2>Datos de Usuarios</h2>
-     <UserDataComp :userId="currentUserId" />
+      <UserDataComp :userId="userData.id" />
     </div>
   </div>
 </template>
@@ -23,14 +28,13 @@ import axios from 'axios'
 import { useApi } from '@/composables/useApi.js'
 
 
+
 const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
     const { data } = await axios.get('/api/emparejamientos/lista')
     datosMatch.value = data
-    const { data } = await axios.get('/api/match');
-    datosMatch.value = data;
   } catch (error) {
     console.error('Error cargando datos match:', error);
   }
@@ -54,9 +58,15 @@ const editarUsuario = async (userId, nuevosDatos) => {
 };
 
 
-onMounted(() => {
-  cargarDatosMatch();
-});
+onMounted(async () => {
+  try {
+    const res = await axios.get('/api/users/1') 
+    userData.value = res.data
+    await cargarDatosMatch()
+  } catch (error) {
+    console.error(error)
+  }
+})
 </script>
 
 <style scoped>
