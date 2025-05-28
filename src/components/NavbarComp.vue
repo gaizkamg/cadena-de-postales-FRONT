@@ -184,7 +184,7 @@ function handleLogout() {
 }
 
 .modal-content {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr; /* Dos columnas */
   gap: 20px; /* Espaciado entre columnas */
   background-color: white;
