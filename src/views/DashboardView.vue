@@ -1,39 +1,52 @@
 <template>
   <div class="dashboard-container">
     <div class="card">
-      <UserFormView />
+      <UserFormComp />
     </div>
     <div class="card">
       <MatchData v-if="datosMatch" :match="datosMatch" />
       <p v-else>Cargando datos...</p>
     </div>
+<<<<<<< HEAD
     <div class="card">
       <h2>Datos de Usuarios</h2>
      <UserDataComp :userId="currentUserId" />
     </div>
+=======
+>>>>>>> main
   </div>
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { ref, onMounted } from 'vue'
 import UserFormView from '@/views/UserFormView.vue'
 import MatchData from '@/components/MatchData.vue'
 import UserDataComp from '@/components/UserDataComp.vue'
 import axios from 'axios'
 import { useApi } from '@/composables/useApi.js'
+=======
+import { ref, onMounted } from 'vue';
+import UserFormComp from '@/components/UserFormComp.vue';
+import MatchData from '@/components/MatchData.vue';
+import axios from 'axios';
+>>>>>>> main
 
-const { fetchUsers, patchUser } = useApi()
-
-const datosMatch = ref(null)
-const datosUsuarios = ref(null)
+const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
+<<<<<<< HEAD
     const { data } = await axios.get('/api/emparejamientos/lista')
     datosMatch.value = data
+=======
+    const { data } = await axios.get('/api/match');
+    datosMatch.value = data;
+>>>>>>> main
   } catch (error) {
-    console.error('Error cargando datos match:', error)
+    console.error('Error cargando datos match:', error);
   }
+<<<<<<< HEAD
 }
 
 const cargarDatosUsuarios = async () => {
@@ -52,11 +65,13 @@ const editarUsuario = async (userId, nuevosDatos) => {
     console.error('Error editando usuario:', error)
   }
 }
+=======
+};
+>>>>>>> main
 
 onMounted(() => {
-  cargarDatosMatch()
-  cargarDatosUsuarios()
-})
+  cargarDatosMatch();
+});
 </script>
 
 <style scoped>

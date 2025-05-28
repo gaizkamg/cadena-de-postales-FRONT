@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useApi } from '@/composables/useApi.js'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-
 // defineStore crea un "almacén" como cajón de datos global
 export const useAuthStore = defineStore('auth', () => {
 
@@ -29,22 +27,15 @@ export const useAuthStore = defineStore('auth', () => {
   // Función para login
   async function login(email, password) {
     try {
-      const { postData } = useApi()
-      const response = await postData(`${API_BASE_URL}/api/auth/login`, { email, contrasena: password })
-      const data = response.data
+      const { fetchData } = useApi() // Usamos el composable
 
-      if (data && data.access_token && data.rol) {
-        // Adaptar los nombres para el frontend
-        const userData = {
-          token: data.access_token,
-          rol_id: data.rol,
-          id: data.usuario_id,
-          mensaje: data.mensaje
-        }
+      const response = await fetchData(`http://localhost:3000/users?email=${email}`)
+      const userData = response.data[0]
+
+      if (userData && userData.password === password) {
         user.value = userData
         isAuthenticated.value = true
         sessionStorage.setItem('user', JSON.stringify(userData))
-        localStorage.setItem('token', userData.token)
         return true
       }
       return false
@@ -57,12 +48,17 @@ export const useAuthStore = defineStore('auth', () => {
   // Función para registro
   async function register(name, email, password) {
     try {
-      const { postData } = useApi()
-      const newUser = { nombre: name, email, contrasena: password }
-      const response = await postData(`${API_BASE_URL}/api/auth/register`, newUser)
-      user.value = response.data
+      const { fetchData, postData } = useApi()
+      const response = await fetchData(`http://localhost:3000/users?email=${email}`)
+      if (response.data.length > 0) {
+        throw new Error('El usuario ya existe')
+      }
+
+      const newUser = { name, email, password }
+      await postData('http://localhost:3000/users', newUser)
+      user.value = newUser
       isAuthenticated.value = true
-      sessionStorage.setItem('user', JSON.stringify(response.data))
+      sessionStorage.setItem('user', JSON.stringify(newUser))
       return true
     } catch (error) {
       console.error('Error de registro:', error)
@@ -74,7 +70,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function updateProfile(updatedUser) {
     try {
       const { putData } = useApi()
-      const response = await putData(`${API_BASE_URL}/users/${updatedUser.id}`, updatedUser)
+      const response = await putData(`http://localhost:3000/users/${updatedUser.id}`, updatedUser)
       user.value = response.data
       sessionStorage.setItem('user', JSON.stringify(response.data))
       return true
@@ -88,7 +84,6 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     isAuthenticated.value = false
     sessionStorage.removeItem('user')
-    localStorage.removeItem('token') // Elimina el token al cerrar sesión
   }
 
   // Exponemos lo que queremos que otros usen
