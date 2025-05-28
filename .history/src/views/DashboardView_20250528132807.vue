@@ -21,7 +21,10 @@ import MatchData from '@/components/MatchData.vue'
 import UserDataComp from '@/components/UserDataComp.vue'
 import axios from 'axios'
 import { useApi } from '@/composables/useApi.js'
+import UserDataComp from '@/components/UserDataComp.vue'
+import { ref } from 'vue'
 
+const currentUserId = ref(1)
 const { fetchUsers, patchUser } = useApi()
 
 const datosMatch = ref(null)

@@ -18,7 +18,7 @@
 import { ref, onMounted } from 'vue'
 import UserFormView from '@/views/UserFormView.vue'
 import MatchData from '@/components/MatchData.vue'
-import UserDataComp from '@/components/UserDataComp.vue'
+import UserDataComp from
 import axios from 'axios'
 import { useApi } from '@/composables/useApi.js'
 
