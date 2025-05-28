@@ -21,19 +21,26 @@ import MatchData from '@/components/MatchData.vue'
 import UserDataComp from '@/components/UserDataComp.vue'
 import axios from 'axios'
 import { useApi } from '@/composables/useApi.js'
-
+import { ref, onMounted } from 'vue';
+import UserFormComp from '@/components/UserFormComp.vue';
+import MatchData from '@/components/MatchData.vue';
+import axios from 'axios';
 
 const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
+<<<<<<< HEAD
     const { data } = await axios.get('/api/emparejamientos/lista')
     datosMatch.value = data
+=======
     const { data } = await axios.get('/api/match');
     datosMatch.value = data;
+>>>>>>> main
   } catch (error) {
     console.error('Error cargando datos match:', error);
   }
+<<<<<<< HEAD
 }
 
 const cargarDatosUsuarios = async () => {
@@ -51,8 +58,10 @@ const editarUsuario = async (userId, nuevosDatos) => {
   } catch (error) {
     console.error('Error editando usuario:', error)
   }
+}
+=======
 };
-
+>>>>>>> main
 
 onMounted(() => {
   cargarDatosMatch();
