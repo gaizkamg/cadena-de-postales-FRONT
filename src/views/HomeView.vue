@@ -3,7 +3,7 @@
                         <div class="img-hero"></div>
                         <div class="text-hero">
                                 <h1>Bienvenido a </h1>
-                                <img src="@/assets/img/logotipo-blanco.png" alt="" />
+                                <img src="@/assets/img/logotipo-negro.png" alt="" />
                                 <p class="subheading">
         📬 Practica y mejora tu español intercambiando cartas manuscritas llenas de emoción y aprendizaje.
       </p>
@@ -47,6 +47,10 @@
         font-family: "Qwitcher Grypen", cursive;
         font-weight: 900;
 
+ }
+
+ .text-hero img {
+       width: 150px;
  }
 
 </style>
