@@ -30,7 +30,11 @@ export const useAuthStore = defineStore('auth', () => {
       const { postData } = useApi();
 
       const response = await postData('/api/auth/login', { email, contrasena: password }); // Cambiar a POST para el login
-      const userData = response.data;
+      console.log('Datos de usuario:', response.data); // Agregar un console.log para inspeccionar los datos
+      const userData = {
+        ...response.data,
+        rol_id: response.data.rol, // Mapear "rol" a "rol_id"
+      };
 
       if (userData) {
         user.value = userData;

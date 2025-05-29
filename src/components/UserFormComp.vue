@@ -243,4 +243,10 @@ onMounted(() => {
 .guardar-btn:hover {
   background-color: #e95f00;
 }
+
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
