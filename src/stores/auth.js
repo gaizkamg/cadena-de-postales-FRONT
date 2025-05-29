@@ -7,30 +7,35 @@ export const useAuthStore = defineStore('auth', () => {
 
   const user = ref(null)
   const isAuthenticated = ref(false)
+  const role = ref(null) //Alejandro
 
   // Cargar el estado del usuario desde sessionStorage
-  const storedUser = sessionStorage.getItem('user')
+  const storedUser = sessionStorage.getItem('user');
   if (storedUser) {
     try {
-      const parsedUser = JSON.parse(storedUser)
-      if (parsedUser && parsedUser.id) {
-        user.value = parsedUser
-        isAuthenticated.value = true
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser && parsedUser.rol_id) { // Asegurar que rol_id esté presente
+        user.value = parsedUser;
+        isAuthenticated.value = true;
       } else {
-        console.error('El usuario almacenado no tiene un ID válido:', parsedUser)
+        console.error('El usuario almacenado no tiene un rol válido:', parsedUser);
       }
     } catch (error) {
-      console.error('Error al parsear el usuario almacenado:', error)
+      console.error('Error al parsear el usuario almacenado:', error);
     }
   }
 
-  // Función para login
+  // Función para login con JWT
   async function login(email, password) {
     try {
       const { postData } = useApi();
 
       const response = await postData('/api/auth/login', { email, contrasena: password }); // Cambiar a POST para el login
-      const userData = response.data;
+      console.log('Datos de usuario:', response.data); // Agregar un console.log para inspeccionar los datos
+      const userData = {
+        ...response.data,
+        rol_id: response.data.rol, // Mapear "rol" a "rol_id"
+      };
 
       if (userData) {
         user.value = userData;

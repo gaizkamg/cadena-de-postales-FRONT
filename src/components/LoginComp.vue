@@ -36,7 +36,7 @@ const handleLogin = async () => {
     if (success) {
       emit('login-success')
       const user = authStore.user
-      if (user && user.rol_id === 1) {
+      if (user && user.rol_id === 1) { // Cambiar rol a rol_id
         router.push('/admin')
       } else {
         router.push('/dashboard')

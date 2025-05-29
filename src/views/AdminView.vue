@@ -4,71 +4,66 @@
 
     <form @submit.prevent>
       <label for="centro">Centro:</label>
-      <select id="centro" v-model="selectedCentro" @change="resetSector">
+      <select id="centro" v-model="selectedCentro">
         <option disabled value="">-- Selecciona un centro --</option>
-        <option v-for="centro in centros" :key="centro" :value="centro">{{ centro }}</option>
+        <option v-for="centro in centros" :key="centro.id" :value="centro.nombre">
+          {{ centro.nombre }}
+        </option>
       </select>
 
       <label for="sector">Sector:</label>
       <select id="sector" v-model="selectedSector" :disabled="!selectedCentro">
         <option disabled value="">-- Selecciona un sector --</option>
-        <option v-for="sector in sectoresFiltrados" :key="sector" :value="sector">{{ sector }}</option>
+        <option v-for="sector in sectoresFiltrados" :key="sector.id" :value="sector.nombre">
+          {{ sector.nombre }}
+        </option>
       </select>
     </form>
 
-    <div v-if="usuariosFiltrados.length" class="tabla-usuarios">
-      <h3>Usuarios - {{ selectedCentro }} / {{ selectedSector }}</h3>
-     <table>
-  <thead>
-    <tr>
-      <th>Seleccionar</th>
-      <th>Nombre</th>
-      <th>Apellidos</th>
-      <th>Centro</th>
-      <th>Refuerzo lingüístico</th>
-      <th>Intereses</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
-         <td>
-        <input 
-          type="checkbox" 
-          :value="usuario.id" 
-          v-model="usuariosSeleccionados"
-        />
-      </td>
-      <td>{{ usuario.nombre }}</td>
-      <td>{{ usuario.apellido }}</td>
-      <td>{{ usuario.centro }}</td>
-      <td>{{ usuario.refuerzo }}</td>
-      <td>{{ usuario.intereses }}</td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-    <p v-else class="info">Selecciona centro y sector para mostrar usuarios.</p>
+    <!-- Tabla de usuarios -->
+        <div v-if="usuariosFiltrados.length" class="tabla-usuarios">
+        <h3>Usuarios - {{ selectedCentro }} / {{ selectedSector }}</h3>
+        <table>
+        <thead>
+        <tr>
+                <th>Seleccionar</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Centro</th>
+                <th>Sector</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
+                <td>
+                <input 
+                type="checkbox" 
+                :value="usuario.id" 
+                v-model="usuariosSeleccionados"
+                />
+                </td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellido }}</td>
+                <td>{{ usuario.centro }}</td>
+                <td>{{ usuario.sector }}</td>
+        </tr>
+        </tbody>
+        </table>
+        
+        </div>
+        <div v-else-if="selectedCentro && selectedSector" class="info">
+                No hay usuarios registrados en este centro y sector.
+        </div>
+        <p v-else class="info">Selecciona centro y sector para mostrar usuarios.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import axios from 'axios'
 
-const centros = [
-  'Boluetabarri', 'Montaño', 'Belategi', 'Tolosa', 'Sarrikue',
-  'Markina', 'Errenteria', 'Intervención Social Bizkaia',
-  'EPA Gipuzkoa', 'EPA Bizkaia'
-]
-
-const sectoresPorCentro = {
-  Boluetabarri: ['Modo - Comercio', 'Informática', 'Climatización - Fontanería', 'Madera', 'Hostalería', 'Administración', 'Complementaria'],
-  Montaño: ['Hostalería', 'Construcción - Electricidad'],
-  Belategi: ['Metal'],
-  Tolosa: [], Sarrikue: [], Markina: [], Errenteria: [],
-  'Intervención Social Bizkaia': [], 'EPA Gipuzkoa': [], 'EPA Bizkaia': []
-}
+const centros = ref([])
+const sectoresFiltrados = ref([])
 
 const usuarios = ref([])
 const usuariosSeleccionados = ref([])
@@ -76,33 +71,61 @@ const usuariosSeleccionados = ref([])
 const selectedCentro = ref('')
 const selectedSector = ref('')
 
-const sectoresFiltrados = computed(() => {
-  return selectedCentro.value ? senoresPorCentro[selectedCentro.value] || [] : []
-})
-
+// ---- Computed -----
 const usuariosFiltrados = computed(() => {
+  if (!selectedCentro.value || !selectedSector.value) return []
   return usuarios.value.filter(
     u => u.centro === selectedCentro.value && u.sector === selectedSector.value
   )
 })
 
-const resetSector = () => {
-  selectedSector.value = ''
-  usuariosSeleccionados.value = []
+// ---- Funciones ----
+const cargarCentros = async () => {
+  try {
+    const { data } = await axios.get('http://localhost:5000/api/centros/lista')
+    centros.value = data
+  } catch (error) {
+    console.error('Error al cargar centros:', error)
+  }
 }
 
-// Cargar usuarios desde API cuando cambia centro o sector
-const cargarUsuarios = async () => {
-  if (!selectedCentro.value || !selectedSector.value) {
-    usuarios.value = []
+watch(selectedCentro, () => {
+  if (!selectedCentro.value) {
+    sectoresFiltrados.value = []
     return
   }
+
+  const centro = centros.value.find(c => c.nombre === selectedCentro.value)
+  if (centro && centro.sectores) {
+    // Si sectores es un array de strings
+    sectoresFiltrados.value = centro.sectores
+  } else {
+    sectoresFiltrados.value = []
+  }
+
+  selectedSector.value = ''
+})
+
+const cargarUsuarios = async () => {
+  if (!selectedCentro.value || !selectedSector.value) return
+
   try {
-    const { data } = await axios.get('/api/usuarios', {
-      params: { centro: selectedCentro.value, sector: selectedSector.value }
+    const { data } = await axios.get('http://localhost:5000/api/usuarios/filtrar', {
+      params: {
+        centro: selectedCentro.value,
+        sector: selectedSector.value
+      }
     })
-    usuarios.value = data
-    usuariosSeleccionados.value = []
+
+    // Mapeamos para tener centro y sector como strings
+    usuarios.value = data.map(u => ({
+      id: u.id,
+      nombre: u.nombre,
+      apellido: u.apellido,
+      centro: u.centro_nombre,
+      sector: u.sector_nombre
+    }))
+
   } catch (error) {
     console.error('Error al cargar usuarios:', error)
   }
@@ -112,9 +135,8 @@ watch([selectedCentro, selectedSector], () => {
   cargarUsuarios()
 })
 
-onMounted(() => {
-  // Opcional: cargar todos o inicializar
-})
+// ---- Carga inicial ----
+cargarCentros()
 </script>
 
 <style scoped>
@@ -143,6 +165,7 @@ form {
 label {
   font-weight: 600;
   margin-right: 8px;
+  color: black;
 }
 
 select {
@@ -185,6 +208,10 @@ th {
   font-weight: 600;
 }
 
+td{
+  color:#111827 ;
+}
+
 tr:nth-child(even) {
   background-color: #f9fafb;
 }
@@ -199,3 +226,4 @@ tr:hover {
   margin-top: 20px;
 }
 </style>
+

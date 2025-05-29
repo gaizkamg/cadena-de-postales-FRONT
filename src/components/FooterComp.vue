@@ -28,6 +28,11 @@ const changeLanguage = (event) => {
   text-align: center;
   box-sizing: border-box;
 }
+.logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
 select{
   background-color: #337442;
   color: white;

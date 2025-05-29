@@ -1,16 +1,11 @@
 <template>
   <div class="dashboard-container">
     <div class="card">
-      <UserFormComp />
+      <UserFormComp :modo="'actualizacion'" />
     </div>
     <div class="card">
-      <MatchData v-if="datosMatch" :match="datosMatch" />
-      <p v-else>{{ $t('panel-carga') }}...</p>
-    </div>
-    <div class="card">
-      <h2>{{ $t('panel-usuarios') }}</h2>
-      <pre v-if="datosUsuarios">{{ datosUsuarios }}</pre>
-      <p v-else>{{ $t('panel-datos') }}...</p>
+      <MatchData v-if="datosMatch && typeof datosMatch === 'object'" :match="datosMatch" />
+      <p v-else>Cargando datos...</p>
     </div>
   </div>
 </template>
@@ -25,10 +20,33 @@ const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
-    const { data } = await axios.get('/api/match');
-    datosMatch.value = data;
+    const token = sessionStorage.getItem('authToken');
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    // Soportar usuario_id o id
+    const userId = user ? (user.usuario_id || user.id) : null; // Obtener el id del usuario logueado
+    console.log('ID del usuario logueado:', userId);
+
+    const url = `${import.meta.env.VITE_API_BASE_URL}/api/emparejamientos/lista`;
+    console.log('URL de la solicitud:', url);
+
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Datos obtenidos de la API:', data);
+
+    if (!Array.isArray(data)) {
+      throw new Error('La respuesta de la API no es válida.');
+    }
+
+    const datosFiltrados = data.filter(match => match.usuario_id === userId);
+    console.log('Datos filtrados:', datosFiltrados);
+
+    datosMatch.value = datosFiltrados;
   } catch (error) {
     console.error('Error cargando datos match:', error);
+    alert('Error al cargar los datos de emparejamiento. Por favor, verifica la API o la autenticación.');
   }
 };
 
@@ -68,7 +86,7 @@ onMounted(() => {
     gap: 20px;
   }
   .card {
-    width: calc(50% - 40px);  
+    width: calc(80% - 40px);  
     min-width: unset;
     max-width: 100%;
     height: 60vh;

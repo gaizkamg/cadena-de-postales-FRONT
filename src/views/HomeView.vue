@@ -48,4 +48,31 @@
 
  }
 
+ .text-hero img {
+       width: 80%;
+ }
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .img-hero {
+    height: 250px;
+  }
+
+  .text-hero {
+    padding: 1.5rem;
+  }
+
+  .text-hero .logo-texto {
+    font-size: 3rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
 </style>

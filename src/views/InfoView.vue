@@ -100,10 +100,17 @@
 </script>
 
 <style scoped>
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .info-section {
   padding: 20px;
-  margin: 20px auto;
-  max-width: 700px;
   background-color: #f0f4f8;
   border-radius: 8px;
   font-family: Arial, sans-serif;
@@ -115,17 +122,23 @@
   text-align: center;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #1a3e72;
+  color: #117211;
 }
 
-/* Estilos base para todas las listas */
+.subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #117211;
+}
+
+/* Listas personalizadas */
 .points, .points-list {
   list-style: none;
   padding-left: 20px;
   margin-bottom: 15px;
 }
 
-/* Estilos para los elementos de lista */
 .points li, .points-list li {
   position: relative;
   padding-left: 15px;
@@ -134,10 +147,9 @@
   color: #444;
 }
 
-/* Marcadores para las listas */
 .points li::before {
   content: "-";
-  color: #2c6fdb;
+  color: #117211;
   position: absolute;
   left: 0;
   font-weight: bold;
@@ -145,35 +157,27 @@
 
 .points-list li::before {
   content: "•";
-  color: #2c6fdb;
+  color: #117211;
   font-size: 20px;
   position: absolute;
   left: 0;
   top: 0;
 }
 
+/* Participantes */
 .participant-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 12px;
   border-radius: 6px;
-  gap: 10px;
-}
-
-.participant-block .subtitle {
-  font-weight: 600;
-  color: #222;
-  width: 180px;
-  text-align: center;
 }
 
 .participant-block .note {
   font-size: 14px;
   color: #555;
-  flex: 1;
   text-align: center;
   padding: 0 10px;
 }
@@ -182,121 +186,24 @@
   max-width: 100%;
   border-radius: 8px;
   margin-top: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.cta-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.participation-link {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #1a3e72;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.info-section {
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 700px;
-  background-color: #f0f4f8;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-.title {
-  font-size: 24px;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #1a3e72;
-}
-
-/* Estilos base para todas las listas */
-.points, .points-list {
-  list-style: none;
-  padding-left: 20px;
-  margin-bottom: 15px;
-}
-
-/* Estilos para los elementos de lista */
-.points li, .points-list li {
-  position: relative;
-  padding-left: 15px;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #444;
-}
-
-/* Marcadores para las listas */
-.points li::before {
-  content: "-";
-  color: #2c6fdb;
-  position: absolute;
-  left: 0;
-  font-weight: bold;
-}
-
-.points-list li::before {
-  content: "•";
-  color: #2c6fdb;
-  font-size: 20px;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.participant-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 6px;
-  gap: 10px;
-}
-
-.participant-block .subtitle {
-  font-weight: 600;
-  color: #222;
-  width: 180px;
-  text-align: center;
-}
-
-.participant-block .note {
-  font-size: 14px;
-  color: #555;
-  flex: 1;
-  text-align: center;
-  padding: 0 10px;
-}
-
-.example-image {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-top: 15px;
-}
-
+/* Versión de escritorio - dos columnas */
 @media (min-width: 900px) {
   .container {
     grid-template-columns: repeat(2, 1fr);
   }
-
+  
   .participant-block {
     grid-template-columns: repeat(2, 1fr);
   }
   
+  /* Asegurar que todas las secciones se distribuyan en 2 columnas */
   .info-section {
-    grid-column: auto; 
+    grid-column: auto; /* Cada sección ocupará una celda del grid */
   }
 }
-
 </style>
