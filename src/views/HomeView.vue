@@ -50,7 +50,7 @@
  }
 
  .text-hero img {
-       width: 60%;
+       width: 80%;
  }
 
 @media (max-width: 768px) {
