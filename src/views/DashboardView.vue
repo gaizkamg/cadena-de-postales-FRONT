@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="card">
-      <UserFormComp />
+      <UserFormComp :modo="'actualizacion'" />
     </div>
     <div class="card">
       <MatchData v-if="datosMatch" :match="datosMatch" />
