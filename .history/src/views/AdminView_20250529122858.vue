@@ -67,7 +67,7 @@
             <td>
               <button @click="verUsuario(usuario)">Ver</button>
               <button @click="editarUsuario(usuario)">Editar</button>
-              <button @click="eliminarUsuario(usuario.id)"class="btn-eliminar">Eliminar</button>
+              <button @click="eliminarUsuario(usuario.id)">Eliminar</button>
             </td>
           </tr>
         </tbody>
@@ -84,10 +84,8 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, computed, watch } from 'vue'
 
-// Centros y sectores
 const centros = [
   'Boluetabarri', 'Montaño', 'Belategi', 'Tolosa', 'Sarrikue',
   'Markina', 'Errenteria', 'Intervención Social Bizkaia',
@@ -102,18 +100,22 @@ const sectoresPorCentro = {
   'Intervención Social Bizkaia': [], 'EPA Gipuzkoa': [], 'EPA Bizkaia': []
 }
 
-// Estados
-const usuarios = ref([])
+const usuarios = ref([
+  { id: 1, nombre: 'Laura', apellido: 'Gómez', centro: 'Boluetabarri', sector: 'Modo - Comercio', refuerzo: 'Sí', intereses: 'Front-End' },
+  { id: 2, nombre: 'Carlos', apellido: 'Martínez', centro: 'Montaño', sector: 'Hostalería', refuerzo: 'No', intereses: 'Back-End' },
+  { id: 3, nombre: 'Ana', apellido: 'López', centro: 'Belategi', sector: 'Metal', refuerzo: 'Sí', intereses: 'Diseño UI' },
+  { id: 4, nombre: 'Pedro', apellido: 'Sánchez', centro: 'Boluetabarri', sector: 'Madera', refuerzo: 'No', intereses: 'DevOps' },
+  { id: 5, nombre: 'Marta', apellido: 'Ruiz', centro: 'Montaño', sector: 'Construcción - Electricidad', refuerzo: 'Sí', intereses: 'Bases de datos' },
+])
+
 const usuariosSeleccionados = ref([])
 
 const selectedCentro = ref('')
 const selectedSector = ref('')
 const busqueda = ref('')
 const paginaActual = ref(1)
-const itemsPorPagina = 10
-const error = ref(null)
+const itemsPorPagina = 3
 
-// Filtrados
 const sectoresFiltrados = computed(() => {
   return selectedCentro.value ? sectoresPorCentro[selectedCentro.value] || [] : []
 })
@@ -136,31 +138,6 @@ const usuariosPaginados = computed(() => {
   return usuariosFiltrados.value.slice(start, start + itemsPorPagina)
 })
 
-// Funciones
-
-const cargarUsuarios = async () => {
-  try {
-    const res = await axios.get('http://localhost:5000/api/usuarios/lista')
-    usuarios.value = res.data
-  } catch (err) {
-    error.value = 'Error al cargar los usuarios.'
-    console.error(err)
-  }
-}
-
-const eliminarUsuario = async (id) => {
-  const confirmado = confirm('¿Estás seguro de eliminar este usuario?')
-  if (!confirmado) return
-
-  try {
-    await axios.delete(`http://localhost:5000/api/usuarios/lista/${id}`)
-    usuarios.value = usuarios.value.filter(u => u.id !== id)
-  } catch (err) {
-    error.value = 'Error al eliminar el usuario.'
-    console.error(err)
-  }
-}
-
 const resetFiltros = () => {
   selectedCentro.value = ''
   selectedSector.value = ''
@@ -181,12 +158,14 @@ function editarUsuario(usuario) {
   alert(`Editar usuario: ${usuario.nombre} ${usuario.apellido}`)
 }
 
-// Montaje inicial
-onMounted(() => {
-  cargarUsuarios()
-})
+function eliminarUsuario(id) {
+  const confirmado = confirm('¿Estás seguro de eliminar este usuario?')
+  if (confirmado) {
+    const idx = usuarios.value.findIndex(u => u.id === id)
+    if (idx !== -1) usuarios.value.splice(idx, 1)
+  }
+}
 </script>
-
 
 <style scoped>
 .admin-dashboard {
@@ -320,15 +299,6 @@ td:last-child {
   flex-wrap: wrap;
   gap: 8px;
 }
-.btn-eliminar {
-  background-color: #e53935; /* rojo suave */
-  color: white;
-}
-
-.btn-eliminar:hover {
-  background-color: #c62828; /* rojo más oscuro al pasar el ratón */
-}
-
 
 /* Responsive design para móviles */
 @media (max-width: 768px) {

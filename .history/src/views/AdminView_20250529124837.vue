@@ -2,7 +2,7 @@
   <div class="admin-dashboard">
     <h2>Panel de Administración</h2>
 
-    <form @submit.prevent>
+    <form @submit.prevent="handleSubmit">
       <label for="centro">Centro:</label>
       <select id="centro" v-model="selectedCentro" @change="resetFiltros">
         <option value="">-- Selecciona un centro --</option>

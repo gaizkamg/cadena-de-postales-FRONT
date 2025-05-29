@@ -84,10 +84,8 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, computed, watch } from 'vue'
 
-// Centros y sectores
 const centros = [
   'Boluetabarri', 'Montaño', 'Belategi', 'Tolosa', 'Sarrikue',
   'Markina', 'Errenteria', 'Intervención Social Bizkaia',
@@ -102,7 +100,6 @@ const sectoresPorCentro = {
   'Intervención Social Bizkaia': [], 'EPA Gipuzkoa': [], 'EPA Bizkaia': []
 }
 
-// Estados
 const usuarios = ref([])
 const usuariosSeleccionados = ref([])
 
@@ -111,9 +108,7 @@ const selectedSector = ref('')
 const busqueda = ref('')
 const paginaActual = ref(1)
 const itemsPorPagina = 10
-const error = ref(null)
 
-// Filtrados
 const sectoresFiltrados = computed(() => {
   return selectedCentro.value ? sectoresPorCentro[selectedCentro.value] || [] : []
 })
@@ -136,31 +131,6 @@ const usuariosPaginados = computed(() => {
   return usuariosFiltrados.value.slice(start, start + itemsPorPagina)
 })
 
-// Funciones
-
-const cargarUsuarios = async () => {
-  try {
-    const res = await axios.get('http://localhost:5000/api/usuarios/lista')
-    usuarios.value = res.data
-  } catch (err) {
-    error.value = 'Error al cargar los usuarios.'
-    console.error(err)
-  }
-}
-
-const eliminarUsuario = async (id) => {
-  const confirmado = confirm('¿Estás seguro de eliminar este usuario?')
-  if (!confirmado) return
-
-  try {
-    await axios.delete(`http://localhost:5000/api/usuarios/lista/${id}`)
-    usuarios.value = usuarios.value.filter(u => u.id !== id)
-  } catch (err) {
-    error.value = 'Error al eliminar el usuario.'
-    console.error(err)
-  }
-}
-
 const resetFiltros = () => {
   selectedCentro.value = ''
   selectedSector.value = ''
@@ -181,12 +151,14 @@ function editarUsuario(usuario) {
   alert(`Editar usuario: ${usuario.nombre} ${usuario.apellido}`)
 }
 
-// Montaje inicial
-onMounted(() => {
-  cargarUsuarios()
-})
+function eliminarUsuario(id) {
+  const confirmado = confirm('¿Estás seguro de eliminar este usuario?')
+  if (confirmado) {
+    const idx = usuarios.value.findIndex(u => u.id === id)
+    if (idx !== -1) usuarios.value.splice(idx, 1)
+  }
+}
 </script>
-
 
 <style scoped>
 .admin-dashboard {

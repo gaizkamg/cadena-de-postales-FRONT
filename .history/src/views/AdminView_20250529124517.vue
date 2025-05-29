@@ -153,7 +153,7 @@ const eliminarUsuario = async (id) => {
   if (!confirmado) return
 
   try {
-    await axios.delete(`http://localhost:5000/api/usuarios/lista/${id}`)
+    await axios.delete(`http://localhost:5000/api/lista/usuarios/${id}`)
     usuarios.value = usuarios.value.filter(u => u.id !== id)
   } catch (err) {
     error.value = 'Error al eliminar el usuario.'

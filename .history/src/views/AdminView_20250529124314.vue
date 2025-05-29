@@ -140,7 +140,7 @@ const usuariosPaginados = computed(() => {
 
 const cargarUsuarios = async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/usuarios/lista')
+    const res = await axios.get('http://localhost:5000/usuarios')
     usuarios.value = res.data
   } catch (err) {
     error.value = 'Error al cargar los usuarios.'
@@ -153,7 +153,7 @@ const eliminarUsuario = async (id) => {
   if (!confirmado) return
 
   try {
-    await axios.delete(`http://localhost:5000/api/usuarios/lista/${id}`)
+    await axios.delete(`http://localhost:5000/usuarios/${id}`)
     usuarios.value = usuarios.value.filter(u => u.id !== id)
   } catch (err) {
     error.value = 'Error al eliminar el usuario.'
