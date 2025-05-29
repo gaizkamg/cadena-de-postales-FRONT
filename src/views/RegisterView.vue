@@ -1,6 +1,6 @@
 <template>
   <div class="register-container">
-    <UserFormComp />
+    <UserFormComp :modo="'registro'" />
   </div>
 </template>
 
