@@ -1,11 +1,24 @@
 <template>
   <header class="navbar">
-    <div class="logo"><a href="/">Cadena de Postales</a></div>
+    <div class="logo">
+      <a href="/"><img src="@/assets/img/logotipo-blanco.png" alt="" /></a>
+    </div>
     <nav class="menu">
       <a href="/">Home</a>
       <a href="/info">Cómo funciona</a>
-      <button class="registro-btn" @click="openRegister">Registro</button>
-      <button class="login-btn" @click="openLogin">Login</button>
+      <template v-if="isAuthenticated">
+        <template v-if="user && user.rol_id === 1">
+          <a href="/admin">Admin</a>
+        </template>
+        <template v-else>
+          <a href="/dashboard">Dashboard</a>
+        </template>
+        <button class="login-btn" @click="handleLogout">Logout</button>
+      </template>
+      <template v-else>
+        <a href="/register" class="registro-btn">Registro</a>
+        <button class="login-btn" @click="openLogin">Login</button>
+      </template>
     </nav>
 
     <!-- Register Modal -->
@@ -13,56 +26,82 @@
       <div class="modal-content">
         <span class="close" @click="closeModals">&times;</span>
         <form @submit.prevent="submitForm">
-        <label for="nombre">Nombre</label>
-        <input id="nombre" v-model="form.nombre" type="text" placeholder="Nombre" />
+          <label for="nombre">Nombre</label>
+          <input
+            id="nombre"
+            v-model="form.nombre"
+            type="text"
+            placeholder="Nombre"
+          />
 
-        <label for="apellido">Apellido</label>
-        <input id="apellido" v-model="form.apellido" type="text" placeholder="Apellido" />
+          <label for="apellido">Apellido</label>
+          <input
+            id="apellido"
+            v-model="form.apellido"
+            type="text"
+            placeholder="Apellido"
+          />
 
-        <label for="dedicacion">¿A qué te dedicas en Peñascal Kooperatiba?</label>
-        <select id="dedicacion" v-model="form.dedicacion">
-          <option disabled value="">Selecciona una opción</option>
-          <option>Estudio</option>
-          <option>Trabajo</option>
-        </select>
+          <label for="dedicacion"
+            >¿A qué te dedicas en Peñascal Kooperatiba?</label
+          >
+          <select id="dedicacion" v-model="form.dedicacion">
+            <option disabled value="">Selecciona una opción</option>
+            <option>Estudio</option>
+            <option>Trabajo</option>
+          </select>
 
-        <label for="centro">¿En qué centro formativo sueles estar?</label>
-        <select id="centro" v-model="form.centro">
-          <option disabled value="">Selecciona un centro</option>
-          <option>Boluetabarri / Modo - Comercio</option>
-          <option>Boluetabarri / Informática</option>
-          <option>Boluetabarri / Climatización - Fontanería</option>
-          <option>Boluetabarri / Madera</option>
-          <option>Boluetabarri / Hostalería</option>
-          <option>Boluetabarri / Administración</option>
-          <option>Boluetabarri / Complementaria</option>
-          <option>Montaño / Hostalería</option>
-          <option>Montaño / Construcción - Electricidad</option>
-          <option>Belategi / Metal</option>
-          <option>Tolosa</option>
-          <option>Sarrikue</option>
-          <option>Markina</option>
-          <option>Errenteria</option>
-          <option>Intervención Social Bizkaia</option>
-          <option>EPA Gipuzkoa</option>
-          <option>EPA Bizkaia</option>
-        </select>
+          <label for="centro">¿En qué centro formativo sueles estar?</label>
+          <select id="centro" v-model="form.centro">
+            <option disabled value="">Selecciona un centro</option>
+            <option>Boluetabarri / Modo - Comercio</option>
+            <option>Boluetabarri / Informática</option>
+            <option>Boluetabarri / Climatización - Fontanería</option>
+            <option>Boluetabarri / Madera</option>
+            <option>Boluetabarri / Hostalería</option>
+            <option>Boluetabarri / Administración</option>
+            <option>Boluetabarri / Complementaria</option>
+            <option>Montaño / Hostalería</option>
+            <option>Montaño / Construcción - Electricidad</option>
+            <option>Belategi / Metal</option>
+            <option>Tolosa</option>
+            <option>Sarrikue</option>
+            <option>Markina</option>
+            <option>Errenteria</option>
+            <option>Intervención Social Bizkaia</option>
+            <option>EPA Gipuzkoa</option>
+            <option>EPA Bizkaia</option>
+          </select>
 
-        <label for="linguistico">¿Perteneces a un grupo de refuerzo lingüístico?</label>
-        <select id="linguistico" v-model="form.linguistico">
-          <option disabled value="">Selecciona una opción</option>
-          <option>Sí</option>
-          <option>No</option>
-        </select>
+          <label for="linguistico"
+            >¿Perteneces a un grupo de refuerzo lingüístico?</label
+          >
+          <select id="linguistico" v-model="form.linguistico">
+            <option disabled value="">Selecciona una opción</option>
+            <option>Sí</option>
+            <option>No</option>
+          </select>
 
-        <label for="email">Email</label>
-        <input id="email" v-model="form.email" type="email" placeholder="Email" required />
+          <label for="email">Email</label>
+          <input
+            id="email"
+            v-model="form.email"
+            type="email"
+            placeholder="Email"
+            required
+          />
 
-        <label for="password">Password</label>
-        <input id="password" v-model="form.password" type="password" placeholder="Password" required />
+          <label for="password">Password</label>
+          <input
+            id="password"
+            v-model="form.password"
+            type="password"
+            placeholder="Password"
+            required
+          />
 
-        <button type="submit" class="registro-btn">Registrar</button>
-      </form>
+          <button type="submit" class="registro-btn">Registrar</button>
+        </form>
       </div>
     </div>
 
@@ -70,12 +109,7 @@
     <div v-if="showLogin" class="modal">
       <div class="modal-content">
         <span class="close" @click="closeModals">&times;</span>
-        <h2>Login Form</h2>
-        <label for="login-email">Email</label>
-        <input id="login-email" type="email" placeholder="Email" />
-        <label for="login-password">Password</label>
-        <input id="login-password" type="password" placeholder="Password" />
-        <button class="login-btn">Login</button>
+        <LoginComp @login-success="closeModals" />
         <!-- Switch to Registro -->
         <p class="switch-text">
           ¿No tienes cuenta?
@@ -87,64 +121,47 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+import { ref, computed } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import LoginComp from "@/components/LoginComp.vue";
 
-const showRegister = ref(false)
-const showLogin = ref(false)
-const authStore = useAuthStore()
+const showRegister = ref(false);
+const showLogin = ref(false);
+const authStore = useAuthStore();
+
+const isAuthenticated = computed(() => authStore.isAuthenticated);
+const user = computed(() => authStore.user);
 
 function openRegister() {
-  showRegister.value = true
-  showLogin.value = false
+  showRegister.value = true;
+  showLogin.value = false;
 }
 function openLogin() {
-  showLogin.value = true
-  showRegister.value = false
+  showLogin.value = true;
+  showRegister.value = false;
 }
 function closeModals() {
-  showLogin.value = false
-  showRegister.value = false
+  showLogin.value = false;
+  showRegister.value = false;
 }
 function switchToLogin() {
-  showRegister.value = false
-  showLogin.value = true
+  showRegister.value = false;
+  showLogin.value = true;
 }
 function switchToRegister() {
-  showLogin.value = false
-  showRegister.value = true
+  showLogin.value = false;
+  showRegister.value = true;
 }
 
 const form = ref({
-  nombre: '',
-  apellido: '',
-  dedicacion: '',
-  centro: '',
-  linguistico: '',
-  email: '',
-  contrasena: '' // <- password
-})
-
-// Centro a ID mapping
-const centroMap = {
-  'Boluetabarri / Modo - Comercio': 1,
-  'Boluetabarri / Informática': 2,
-  'Boluetabarri / Climatización - Fontanería': 3,
-  'Boluetabarri / Madera': 4,
-  'Boluetabarri / Hostalería': 5,
-  'Boluetabarri / Administración': 6,
-  'Boluetabarri / Complementaria': 7,
-  'Montaño / Hostalería': 8,
-  'Montaño / Construcción - Electricidad': 9,
-  'Belategi / Metal': 10,
-  'Tolosa': 11,
-  'Sarrikue': 12,
-  'Markina': 13,
-  'Errenteria': 14,
-  'Intervención Social Bizkaia': 15,
-  'EPA Gipuzkoa': 16,
-  'EPA Bizkaia': 17
-}
+  nombre: "",
+  apellido: "",
+  dedicacion: "",
+  centro: "",
+  linguistico: "",
+  email: "",
+  password: "",
+});
 
 const submitForm = async () => {
   try {
@@ -196,19 +213,25 @@ const submitForm = async () => {
 
 /*const submitForm = async () => {
   // Aquí deberías llamar a tu store o API para registrar
-  await authStore.register(form.value)
-  closeModals()
+  await authStore.register(form.value);
+  closeModals();
   // Limpia el formulario
   form.value = {
-    nombre: '',
-    apellido: '',
-    dedicacion: '',
-    centro: '',
-    linguistico: '',
-    email: '',
-    password: ''
-  }
-}*/
+    nombre: "",
+    apellido: "",
+    dedicacion: "",
+    centro: "",
+    linguistico: "",
+    email: "",
+    password: "",
+  };
+};
+
+function handleLogout() {
+  authStore.logout();
+  // Opcional: recarga la página o redirige a home
+  window.location.href = "/";
+}
 </script>
 
 <style scoped>
@@ -300,10 +323,13 @@ const submitForm = async () => {
 
 .modal-content {
   background: white;
-  padding: 40px 30px; /* pehle 30px tha, ab zyada padding */
+  padding: 40px 30px;
+  /* pehle 30px tha, ab zyada padding */
   border-radius: 12px;
-  width: 400px; /* pehle 320px tha */
-  text-align: left; /* center se left aligned */
+  width: 400px;
+  /* pehle 320px tha */
+  text-align: left;
+  /* center se left aligned */
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -315,10 +341,9 @@ const submitForm = async () => {
   color: #333;
 }
 
-.modal-content h2{
+.modal-content h2 {
   color: black;
 }
-
 
 .modal-content input {
   width: 100%;
@@ -338,6 +363,7 @@ const submitForm = async () => {
   box-shadow: 0 0 5px #fd7e14;
   outline: none;
 }
+
 .modal-content select {
   width: 100%;
   padding: 10px;
@@ -347,9 +373,12 @@ const submitForm = async () => {
   background-color: white;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 select {
-  max-height: 200px;   /* dropdown ka max height */
-  overflow-y: auto;    /* scroll vertical agar zyada items hon */
+  max-height: 200px;
+  /* dropdown ka max height */
+  overflow-y: auto;
+  /* scroll vertical agar zyada items hon */
 }
 
 .modal-content select:hover {
@@ -399,6 +428,7 @@ select {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
