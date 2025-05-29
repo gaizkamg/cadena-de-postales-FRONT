@@ -225,7 +225,7 @@ const submitForm = async () => {
     email: "",
     password: "",
   };
-};
+};*/
 
 function handleLogout() {
   authStore.logout();
