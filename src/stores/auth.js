@@ -9,18 +9,18 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = ref(false)
 
   // Cargar el estado del usuario desde sessionStorage
-  const storedUser = sessionStorage.getItem('user')
+  const storedUser = sessionStorage.getItem('user');
   if (storedUser) {
     try {
-      const parsedUser = JSON.parse(storedUser)
-      if (parsedUser && parsedUser.id) {
-        user.value = parsedUser
-        isAuthenticated.value = true
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser && parsedUser.rol_id) { // Asegurar que rol_id esté presente
+        user.value = parsedUser;
+        isAuthenticated.value = true;
       } else {
-        console.error('El usuario almacenado no tiene un ID válido:', parsedUser)
+        console.error('El usuario almacenado no tiene un rol válido:', parsedUser);
       }
     } catch (error) {
-      console.error('Error al parsear el usuario almacenado:', error)
+      console.error('Error al parsear el usuario almacenado:', error);
     }
   }
 
