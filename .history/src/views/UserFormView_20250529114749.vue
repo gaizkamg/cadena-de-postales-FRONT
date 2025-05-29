@@ -46,16 +46,24 @@
         </select>
 
         <label for="linguistico">¿Perteneces a un grupo de refuerzo lingüístico?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" :value="true" v-model="form.refuerzo_linguistico" />
-            Sí
-          </label>
-          <label>
-            <input type="radio" :value="false" v-model="form.refuerzo_linguistico" />
-            No
-          </label>
-        </div>
+       <label>
+      <input
+        type="checkbox"
+        :checked="form.refuerzo_linguistico === true"
+        @change="setRefuerzo(true)"
+      />
+      Sí
+    </label>
+
+        <label>
+          <input
+            type="checkbox"
+            :checked="form.refuerzo_linguistico === false"
+            @change="setRefuerzo(false)"
+          />
+          No
+        </label>
+      </div>
 
         <label for="penascal_rol">Rol en Peñascal</label>
         <select id="penascal_rol" v-model="form.penascal_rol">
@@ -69,14 +77,14 @@
             {{ modo === 'registro' ? 'Registrar' : 'Guardar cambios' }}
           </button>
         </div>
+      </div>
       </form>
-    </div>
-  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+
 
 const editable = ref(false)
 const modo = ref('registro') // Cambiar a 'actualizacion' según el caso

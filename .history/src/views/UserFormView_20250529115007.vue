@@ -46,16 +46,11 @@
         </select>
 
         <label for="linguistico">¿Perteneces a un grupo de refuerzo lingüístico?</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" :value="true" v-model="form.refuerzo_linguistico" />
-            Sí
-          </label>
-          <label>
-            <input type="radio" :value="false" v-model="form.refuerzo_linguistico" />
-            No
-          </label>
-        </div>
+        <select id="linguistico" v-model="form.refuerzo_linguistico">
+          <option disabled value="">Selecciona una opción</option>
+          <option :value="true">Sí</option>
+          <option :value="false">No</option>
+        </select>
 
         <label for="penascal_rol">Rol en Peñascal</label>
         <select id="penascal_rol" v-model="form.penascal_rol">
