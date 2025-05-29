@@ -285,4 +285,18 @@
   margin-top: 15px;
 }
 
+@media (min-width: 900px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .participant-block {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .info-section {
+    grid-column: auto; 
+  }
+}
+
 </style>

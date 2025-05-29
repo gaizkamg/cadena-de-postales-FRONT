@@ -1,25 +1,14 @@
 import { ref } from 'vue'
 import axios from 'axios'
-import { useAuthStore } from '@/stores/auth.js';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-/* const API_USER = import.meta.env.VITE_API_USER
-const API_PASS = import.meta.env.VITE_API_PASS */
+const API_USER = import.meta.env.VITE_API_USER
+const API_PASS = import.meta.env.VITE_API_PASS
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
- })
-
-axiosInstance.interceptors.request.use((config) => {
-  const authStore = useAuthStore();
-  const token = authStore.user?.access_token; // Obtener el token desde Pinia
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+  auth: API_USER && API_PASS ? { username: API_USER, password: API_PASS } : undefined
+})
 
 export function useApi() {
   const data = ref(null)
@@ -29,7 +18,7 @@ export function useApi() {
   const fetchData = async (url) => {
     loading.value = true
     try {
-      const response = await axiosInstance.get(url)
+      const response = await axiosInstance.get(url) // Usar axiosInstance para evitar concatenación incorrecta
       data.value = response.data
       return response
     } catch (err) {
@@ -43,8 +32,7 @@ export function useApi() {
   const postData = async (url, payload) => {
     loading.value = true
     try {
-      const fullUrl = url.startsWith('http') ? url : url;
-      const response = await axiosInstance.post(fullUrl, payload)
+      const response = await axios.post(API_BASE_URL + url, payload)
       data.value = response.data
       return response
     } catch (err) {
@@ -58,7 +46,7 @@ export function useApi() {
   const putData = async (url, payload) => {
     loading.value = true
     try {
-      const response = await axiosInstance.put(url, payload)
+      const response = await axios.put(API_BASE_URL + url, payload)
       data.value = response.data
       return response
     } catch (err) {
@@ -72,7 +60,7 @@ export function useApi() {
   const deleteData = async (url) => {
     loading.value = true
     try {
-      const response = await axiosInstance.delete(url)
+      const response = await axios.delete(API_BASE_URL + url)
       data.value = response.data
       return response
     } catch (err) {
@@ -83,20 +71,5 @@ export function useApi() {
     }
   }
 
-  const fetchUsers = async () => {
-    const { data } = await axios.get('/api/users')
-    return data
-  }
-
-  const patchUser = async (userId, payload) => {
-    try {
-      const response = await axiosInstance.patch(`/api/users/${userId}`, payload)
-      return response.data
-    } catch (err) {
-      console.error('Error patching user:', err)
-      throw err
-    }
-  }
-
-  return { data, loading, error, fetchData, postData, putData, deleteData, fetchUsers, patchUser }
+  return { data, loading, error, fetchData, postData, putData, deleteData }
 }

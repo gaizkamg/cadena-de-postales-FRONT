@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useApi } from '@/composables/useApi.js'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-
 // defineStore crea un "almacén" como cajón de datos global
 export const useAuthStore = defineStore('auth', () => {
 
@@ -29,58 +27,56 @@ export const useAuthStore = defineStore('auth', () => {
   // Función para login
   async function login(email, password) {
     try {
-      const { postData } = useApi()
-      const response = await postData(`${API_BASE_URL}/api/auth/login`, { email, contrasena: password })
-      const data = response.data
+      const { postData } = useApi();
 
-      if (data && data.access_token && data.rol) {
-        // Adaptar los nombres para el frontend
-        const userData = {
-          token: data.access_token,
-          rol_id: data.rol,
-          id: data.usuario_id,
-          mensaje: data.mensaje
-        }
-        user.value = userData
-        isAuthenticated.value = true
-        sessionStorage.setItem('user', JSON.stringify(userData))
-        localStorage.setItem('token', userData.token)
-        return true
+      const response = await postData('/api/auth/login', { email, contrasena: password }); // Cambiar a POST para el login
+      const userData = response.data;
+
+      if (userData) {
+        user.value = userData;
+        isAuthenticated.value = true;
+        sessionStorage.setItem('user', JSON.stringify(userData));
+        return true;
       }
-      return false
+      return false;
     } catch (error) {
-      console.error('Error de login:', error)
-      return false
+      console.error('Error de login:', error);
+      return false;
     }
   }
 
   // Función para registro
   async function register(name, email, password) {
     try {
-      const { postData } = useApi()
-      const newUser = { nombre: name, email, contrasena: password }
-      const response = await postData(`${API_BASE_URL}/api/auth/register`, newUser)
-      user.value = response.data
-      isAuthenticated.value = true
-      sessionStorage.setItem('user', JSON.stringify(response.data))
-      return true
+      const { fetchData, postData } = useApi();
+      const response = await fetchData(`/api/usuarios?email=${email}`); // Ajustar al endpoint correcto
+      if (response.data.length > 0) {
+        throw new Error('El usuario ya existe');
+      }
+
+      const newUser = { name, email, password };
+      await postData('/api/usuarios', newUser); // Ajustar al endpoint correcto
+      user.value = newUser;
+      isAuthenticated.value = true;
+      sessionStorage.setItem('user', JSON.stringify(newUser));
+      return true;
     } catch (error) {
-      console.error('Error de registro:', error)
-      return false
+      console.error('Error de registro:', error);
+      return false;
     }
   }
 
   // Función para actualizar perfil
   async function updateProfile(updatedUser) {
     try {
-      const { putData } = useApi()
-      const response = await putData(`${API_BASE_URL}/users/${updatedUser.id}`, updatedUser)
-      user.value = response.data
-      sessionStorage.setItem('user', JSON.stringify(response.data))
-      return true
+      const { putData } = useApi();
+      const response = await putData(`/api/usuarios/${updatedUser.id}`, updatedUser); // Ajustar al endpoint correcto
+      user.value = response.data;
+      sessionStorage.setItem('user', JSON.stringify(response.data));
+      return true;
     } catch (error) {
-      console.error('Error al actualizar el perfil:', error)
-      return false
+      console.error('Error al actualizar el perfil:', error);
+      return false;
     }
   }
 
@@ -88,7 +84,6 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     isAuthenticated.value = false
     sessionStorage.removeItem('user')
-    localStorage.removeItem('token') // Elimina el token al cerrar sesión
   }
 
   // Exponemos lo que queremos que otros usen
