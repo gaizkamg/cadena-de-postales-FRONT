@@ -118,7 +118,7 @@ const cargarDatosSelect = async () => {
     sectores.value = sectoresResponse.data;
 
     const interesesResponse = await fetchData(`${import.meta.env.VITE_API_BASE_URL}/api/intereses/lista`);
-    intereses.value = interesesResponse.data;
+    intereses.value = interesesResponse.data.map(interes => ({ id: interes.id, nombre: interes.descripcion_castellano }));  
 
     const rolesResponse = await fetchData(`${import.meta.env.VITE_API_BASE_URL}/api/roles`);
     roles.value = rolesResponse.data;

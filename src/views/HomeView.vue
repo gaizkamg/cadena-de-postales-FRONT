@@ -2,7 +2,8 @@
                 <div class="hero">
                         <div class="img-hero"></div>
                         <div class="text-hero">
-                                <h1>{{ $t('bienvenido-a') }} <span class="logo-texto">Cadena de Postales</span></h1>
+                                <h1>{{ $t('home-bienvenido-a') }} <span class="logo-texto">Cadena de Postales</span></h1>
+                                <img src="@/assets/img/logotipo-blanco.png" alt="" />
                                 <p class="subheading">
         📬 {{ $t('home-practica-intro') }}
       </p>
@@ -37,8 +38,7 @@
         display: flex;
         flex-direction: column;
         padding: 3rem;
-
-        
+      
  }
 
  .text-hero .logo-texto {
