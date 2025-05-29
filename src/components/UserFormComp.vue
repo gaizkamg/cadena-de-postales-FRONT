@@ -74,18 +74,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useApi } from '@/composables/useApi.js';
 
 const { postData, fetchData } = useApi();
 
 const editable = ref(false)
-const { modo } = defineProps({
-  modo: {
-    type: String,
-    required: true,
-  },
-});
+const modo = ref('registro') // Cambiar a 'actualizacion' según el caso
 
 const form = ref({
   nombre: '',
@@ -154,11 +149,11 @@ const editar = () => {
 }
 
 onMounted(() => {
-  if (modo === 'registro') {
+  if (modo.value === 'registro') {
     form.value.rol_id = ""; // Asegurar que el valor inicial sea vacío para mostrar el placeholder
   }
   cargarDatosSelect();
-  if (modo === 'actualizacion') {
+  if (modo.value === 'actualizacion') {
     cargarDatosUsuario();
   }
 })

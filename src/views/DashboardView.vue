@@ -4,7 +4,7 @@
       <UserFormComp :modo="'actualizacion'" />
     </div>
     <div class="card">
-      <MatchData v-if="datosMatch" :match="datosMatch" />
+      <MatchData v-if="datosMatch && typeof datosMatch === 'object'" :match="datosMatch" />
       <p v-else>Cargando datos...</p>
     </div>
   </div>
