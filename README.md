@@ -20,7 +20,6 @@ Postales Frontend se comunica con un backend que maneja autenticación, almacena
 ## 🚀 Tecnologías utilizadas
 
 - **Vue.js**
-- **Vite**
 - **JavaScript**
 - **HTML5**
 - **CSS**
