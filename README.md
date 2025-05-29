@@ -27,27 +27,30 @@ Postales Frontend se comunica con un backend que maneja autenticación, almacena
 
 ## 📁 Estructura del proyecto
 
+```plaintext
 postales-front/
 |── .history/
 |── node_modules/
 ├── public/
 ├── src/
-│ ├── assets/
-│ ├── components/
-| ├── composables/
-│ ├── layouts/
-│ ├── router/
-│ ├── stores/
-│ ├── views/
-│ ├── App.vue
-│ └── main.js
-|── .env
-|── .gitignore
+│   ├── assets/
+│   ├── components/
+│   ├── composables/
+│   ├── layouts/
+│   ├── router/
+│   ├── stores/
+│   ├── views/
+│   ├── App.vue
+│   └── main.js
+├── .env
+├── .gitignore
 ├── index.html
 ├── package-lock.json
 ├── package.json
 ├── README.md
 └── vite.config.js
+```
+
 
 ## pagina de Home
 ![Home Page](src/assets/img/home.png)
