@@ -80,7 +80,7 @@ npm install
 ```bash
 npm run dev
 ```
-4. Abre el navegador en http://localhost:3000
+4. Abre el navegador en http://localhost:5173/info
 
 ## ⚙️ Cómo funciona
 
