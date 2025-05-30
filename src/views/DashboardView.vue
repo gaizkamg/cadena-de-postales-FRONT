@@ -1,25 +1,51 @@
 <template>
+
+  <div class="dashboard-container" v-if="userData && userData.role">
+    <!-- Card 1: UserForm -->
+    <div class="card" v-if="userData.role === 2 || userData.role === 3">
+      <UserFormView />
+    </div>
+
+    <!-- Card 2: MatchData -->
+    <div class="card" v-if="userData.role === 2 || userData.role === 3">
+
   <div class="dashboard-container">
     <div class="card">
       <UserFormComp :modo="'actualizacion'" />
     </div>
     <div class="card">
       <MatchData v-if="datosMatch && typeof datosMatch === 'object'" :match="datosMatch" />
+
       <p v-else>Cargando datos...</p>
+    </div>
+
+    <!-- Card 3: UserDataComp (solo para rol 3) -->
+    <div class="card" v-if="userData.role === 3">
+      <h2>Datos de Usuarios</h2>
+      <UserDataComp :userId="userData.id" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import UserFormComp from '@/components/UserFormComp.vue';
-import MatchData from '@/components/MatchData.vue';
-import axios from 'axios';
+import { ref, onMounted } from 'vue'
+import UserFormView from '@/views/UserFormView.vue'
+import MatchData from '@/components/MatchData.vue'
+import UserDataComp from '@/components/UserDataComp.vue'
+import axios from 'axios'
+import { useApi } from '@/composables/useApi.js'
+
+
 
 const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
+
+    const { data } = await axios.get('/api/emparejamientos/lista')
+    datosMatch.value = data;
+    datosMatch.value = data
+
     const token = sessionStorage.getItem('authToken');
     const user = JSON.parse(sessionStorage.getItem('user'));
     // Soportar usuario_id o id
@@ -44,20 +70,47 @@ const cargarDatosMatch = async () => {
     console.log('Datos filtrados:', datosFiltrados);
 
     datosMatch.value = datosFiltrados;
+
   } catch (error) {
     console.error('Error cargando datos match:', error);
     alert('Error al cargar los datos de emparejamiento. Por favor, verifica la API o la autenticación.');
   }
+}
+
+const cargarDatosUsuarios = async () => {
+  try {
+    datosUsuarios.value = await fetchUsers()
+  } catch (error) {
+    console.error('Error cargando datos de usuarios:', error)
+  }
+}
+
+const editarUsuario = async (userId, nuevosDatos) => {
+  try {
+    const usuarioActualizado = await patchUser(userId, nuevosDatos)
+    console.log('Usuario actualizado:', usuarioActualizado)
+  } catch (error) {
+    console.error('Error editando usuario:', error)
+  }
 };
 
-onMounted(() => {
-  cargarDatosMatch();
-});
+
+onMounted(async () => {
+  try {
+    const res = await axios.get('/api/users/1') 
+    userData.value = res.data
+    await cargarDatosMatch()
+  } catch (error) {
+    console.error(error)
+  }
+})
 </script>
 
 <style scoped>
 .dashboard-container {
   display: flex;
+
+  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
   flex-wrap: wrap;  
   justify-content: center;
   gap: 30px;
@@ -80,18 +133,26 @@ onMounted(() => {
   flex-direction: column;
 }
 
+/* Versión Tablet - 2 columnas */
+
  
 @media (max-width: 1200px) {
   .dashboard-container {
     gap: 20px;
   }
   .card {
+
+    width: calc(50% - 40px); /* 2 cards por fila */
+
     width: calc(80% - 40px);  
     min-width: unset;
     max-width: 100%;
     height: 60vh;
   }
 }
+
+
+/* Versión Móvil - 1 columna */
 
  
 @media (max-width: 768px) {
@@ -102,6 +163,7 @@ onMounted(() => {
     gap: 20px;
   }
 
+
   .card {
     width: 100%;
     min-width: unset;
@@ -109,13 +171,23 @@ onMounted(() => {
     max-height: none;
     padding: 20px;
   }
+<
+  
+  /* Asegurar que todas las cards sean visibles */
+
 
  
+
   .card:last-child {
     margin-bottom: 20px;
   }
 }
+
+
+/* Contenido interno responsive */
+
  
+
 .card h2 {
   font-size: clamp(1.2rem, 2vw, 1.4rem);
 }
