@@ -55,6 +55,23 @@
                 No hay usuarios registrados en este centro y sector.
         </div>
         <p v-else class="info">Selecciona centro y sector para mostrar usuarios.</p>
+
+        <!-- Botón para borrar usuarios -->
+        <div class="acciones">
+          <button
+            @click="confirmarBorrarUsuarios" 
+            type="button" 
+            class="btn-borrar"
+            >💣Borrar todos los usuarios💣
+          </button>
+          <button 
+            @click="borrarUsuariosSeleccionados" 
+            type="button" 
+            class="btn-borrar-seleccionados"
+          >
+            Borrar {{ usuariosSeleccionados.length }} usuario(s) seleccionado(s)
+          </button>
+        </div>
   </div>
 </template>
 
@@ -70,6 +87,48 @@ const usuariosSeleccionados = ref([])
 
 const selectedCentro = ref('')
 const selectedSector = ref('')
+
+const borrarUsuariosSeleccionados = async () => {
+  const confirmacion = window.confirm(`¿Estás seguro de borrar ${usuariosSeleccionados.value.length} usuario(s)?`)
+  
+  if (!confirmacion) return
+
+  for (const id of usuariosSeleccionados.value) {
+    try {
+      await axios.delete(`http://localhost:5000/api/usuarios/${id}`)
+    } catch (error) {
+      console.error(`Error al borrar usuario con ID ${id}:`, error)
+    }
+  }
+
+  // Refrescar lista de usuarios
+  usuarios.value = usuarios.value.filter(u => !usuariosSeleccionados.value.includes(u.id))
+  usuariosSeleccionados.value = []
+
+  alert('Usuarios seleccionados eliminados correctamente')
+}
+
+const confirmarBorrarUsuarios = () => {
+  const confirmacion = window.confirm('¿Estás seguro? Esta acción eliminará a todos los usuarios que no sean Admin o Super Admin.')
+  
+  if (confirmacion) {
+    borrarUsuariosNoAdmin()
+  }
+}
+
+const borrarUsuariosNoAdmin = async () => {
+  try {
+    const { data } = await axios.delete('http://localhost:5000/api/usuarios/borrar_todo')
+    alert(data.mensaje)
+
+    // Opcional: recargar usuarios o limpiar tabla
+    usuarios.value = usuarios.value.filter(u => u.rol_id === 1 || u.rol_id === 3)
+
+  } catch (error) {
+    console.error('Error al borrar usuarios:', error)
+    alert('Hubo un error al intentar borrar los usuarios.')
+  }
+}
 
 // ---- Computed -----
 const usuariosFiltrados = computed(() => {
@@ -224,6 +283,26 @@ tr:hover {
   color: #6b7280;
   font-style: italic;
   margin-top: 20px;
+}
+
+.acciones {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-borrar {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-borrar:hover {
+  background-color: #dc2626;
 }
 </style>
 
