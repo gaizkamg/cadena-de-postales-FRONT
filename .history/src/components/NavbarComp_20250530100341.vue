@@ -328,7 +328,9 @@ function handleLogout() {
 
 select {
   max-height: 200px;
+  /* dropdown ka max height */
   overflow-y: auto;
+  /* scroll vertical agar zyada items hon */
 }
 
 .modal-content select:hover {

@@ -40,7 +40,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-
+import UserEditModal from '@/components/UserEditModal.vue' // asumo que tienes un modal para editar usuarios
 
 const usuarios = ref([])
 const loading = ref(true)
