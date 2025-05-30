@@ -5,18 +5,18 @@
     </div>
     <nav class="menu">
       <a href="/">Home</a>
-      <a href="/info">Cómo funciona</a>
+      <a href="/info">{{ $t('nav-como')}}?</a>
       <template v-if="isAuthenticated">
         <template v-if="user && user.rol_id === 1">
           <a href="/admin">Admin</a>
         </template>
         <template v-else>
-          <a href="/dashboard">Dashboard</a>
+          <a href="/dashboard">{{ $t('nav-panel')}}</a>
         </template>
-        <button class="login-btn" @click="handleLogout">Logout</button>
+        <button class="login-btn" @click="handleLogout">{{ $t('nav-salir')}}</button>
       </template>
       <template v-else>
-        <button class="registro-btn" @click="openRegister">Registro</button>
+        <a href="/register" class="registro-btn">{{ $t('nav-registro')}}</a>
         <button class="login-btn" @click="openLogin">Login</button>
       </template>
     </nav>
@@ -112,8 +112,8 @@
         <LoginComp @login-success="closeModals" />
         <!-- Switch to Registro -->
         <p class="switch-text">
-          ¿No tienes cuenta?
-          <a href="#" @click.prevent="switchToRegister">Registro</a>
+          {{ $t('nav-no')}}
+          <a href="#" @click.prevent="switchToRegister">{{ $t('nav-registro')}}</a>
         </p>
       </div>
     </div>

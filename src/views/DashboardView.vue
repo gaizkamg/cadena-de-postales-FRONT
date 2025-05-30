@@ -1,4 +1,5 @@
 <template>
+
   <div class="dashboard-container" v-if="userData && userData.role">
     <!-- Card 1: UserForm -->
     <div class="card" v-if="userData.role === 2 || userData.role === 3">
@@ -7,7 +8,14 @@
 
     <!-- Card 2: MatchData -->
     <div class="card" v-if="userData.role === 2 || userData.role === 3">
-      <MatchData v-if="datosMatch" :match="datosMatch" />
+
+  <div class="dashboard-container">
+    <div class="card">
+      <UserFormComp :modo="'actualizacion'" />
+    </div>
+    <div class="card">
+      <MatchData v-if="datosMatch && typeof datosMatch === 'object'" :match="datosMatch" />
+
       <p v-else>Cargando datos...</p>
     </div>
 
@@ -33,11 +41,39 @@ const datosMatch = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
+
     const { data } = await axios.get('/api/emparejamientos/lista')
     datosMatch.value = data;
     datosMatch.value = data
+
+    const token = sessionStorage.getItem('authToken');
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    // Soportar usuario_id o id
+    const userId = user ? (user.usuario_id || user.id) : null; // Obtener el id del usuario logueado
+    console.log('ID del usuario logueado:', userId);
+
+    const url = `${import.meta.env.VITE_API_BASE_URL}/api/emparejamientos/lista`;
+    console.log('URL de la solicitud:', url);
+
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Datos obtenidos de la API:', data);
+
+    if (!Array.isArray(data)) {
+      throw new Error('La respuesta de la API no es válida.');
+    }
+
+    const datosFiltrados = data.filter(match => match.usuario_id === userId);
+    console.log('Datos filtrados:', datosFiltrados);
+
+    datosMatch.value = datosFiltrados;
+
   } catch (error) {
     console.error('Error cargando datos match:', error);
+    alert('Error al cargar los datos de emparejamiento. Por favor, verifica la API o la autenticación.');
   }
 }
 
@@ -73,7 +109,9 @@ onMounted(async () => {
 <style scoped>
 .dashboard-container {
   display: flex;
+
   flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
+  flex-wrap: wrap;  
   justify-content: center;
   gap: 30px;
   padding: 30px;
@@ -96,19 +134,27 @@ onMounted(async () => {
 }
 
 /* Versión Tablet - 2 columnas */
+
+ 
 @media (max-width: 1200px) {
   .dashboard-container {
     gap: 20px;
   }
   .card {
+
     width: calc(50% - 40px); /* 2 cards por fila */
+
+    width: calc(80% - 40px);  
     min-width: unset;
     max-width: 100%;
     height: 60vh;
   }
 }
 
+
 /* Versión Móvil - 1 columna */
+
+ 
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
@@ -116,7 +162,8 @@ onMounted(async () => {
     padding: 15px;
     gap: 20px;
   }
-  
+
+
   .card {
     width: 100%;
     min-width: unset;
@@ -124,14 +171,23 @@ onMounted(async () => {
     max-height: none;
     padding: 20px;
   }
+<
   
   /* Asegurar que todas las cards sean visibles */
+
+
+ 
+
   .card:last-child {
     margin-bottom: 20px;
   }
 }
 
+
 /* Contenido interno responsive */
+
+ 
+
 .card h2 {
   font-size: clamp(1.2rem, 2vw, 1.4rem);
 }

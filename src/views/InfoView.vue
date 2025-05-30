@@ -1,4 +1,5 @@
 <template>
+
   <div class="container">
     <section class="info-section">
       <h1 class="title">Objetivo de la dinámica</h1>
@@ -105,6 +106,103 @@
       </ul>
     </section>
   </div>
+
+  <section class="info-section">
+    <h1 class="title">{{ $t('info-objetivo')}}</h1>
+    <p class="description">
+      {{ $t('info-iniciativa1')}}<strong>"Cadena de Postales"</strong> {{ $t('info-iniciativa2') }}</p>
+    <p>{{ $t('info-encabezado') }}</p>
+    <ul class="points-list">
+      <li>{{ $t('info-potenciar') }}</li>
+      <li>{{ $t('info-estimular') }}</li>
+      <li>{{ $t('info-favorecer') }}</li>
+      <li>{{ $t('info-lazos') }}</li>
+      <li>{{ $t('info-autoestima') }}</li>
+    </ul>
+  </section>
+
+  <section class="info-section">
+    <h2 class="title">{{ $t('info-justificacion') }}</h2>
+    <p class="description">{{ $t('info-contexto') }}</p>
+    <p><em>{{ $t('info-importancia') }}</em></p>
+    <ul class="points-list">
+      <li>{{ $t('info-refuerza') }}</li>
+      <li>{{ $t('info-promueve') }}</li>
+      <li>{{ $t('info-ayuda') }}</li>
+      <li>{{ $t('info-impacto') }}</li>
+      <li>{{ $t('info-fomenta') }}</li>
+    </ul>
+    <p class="description-box">
+      {{ $t('info-carta') }}
+    </p>
+  </section>
+
+  <!-- Usa una estructura consistente para todas las secciones -->
+  <section class="info-section">
+    <h2 class="title">{{ $t('info-funcionamiento') }}Cadena de Postales?</h2>
+    
+    <!-- Usa el mismo patrón para todas las listas -->
+    <p>1:  {{ $t('info-paso1') }}</p>
+    <ul class="points">
+      <li>{{ $t('info-tema1') }} <strong>"{{ $t('info-tema2') }}"</strong></li>
+      <li>{{ $t('info-escribir') }}</li>
+      <li>{{ $t('info-presentacion') }}</li>
+    </ul>
+    
+    <p>2: {{ $t('info-enviar') }}</p>
+    <ul class="points">
+      <li>{{ $t('info-recogida') }}.</li>
+    </ul>
+    
+    <p>3: {{ $t('info-respuesta') }}</p>
+    <ul class="points">
+      <li>{{ $t('info-recibo') }}.</li>
+      <li>{{ $t('info-proceso') }}.</li>
+    </ul>
+  </section>
+
+  <section class="info-section">
+    <h2 class="title">{{ $t('info-quienes') }}?</h2>
+    <p class="description">{{ $t('info-apertura') }}</p>
+
+    <div class="participant-block">
+      <h3 class="subtitle">{{ $t('info-alumnado') }}</h3>
+      <p class="note">{{ $t('info-importante') }}</p>
+      <h3 class="subtitle">{{ $t('info-profesorado') }}</h3>
+    </div>
+
+    <div>
+      <h3 class="subtitle">{{ $t('info-requisitos') }}</h3>
+      <ul class="points">
+        <li>{{ $t('info-alfabetismo') }}.</li>
+        <li>{{ $t('info-compromiso') }}.</li>
+      </ul>
+    </div>
+    <p>{{ $t('info-inicio') }}</p>
+  </section>
+
+  <section class="info-section ">
+    <h2 class="title">{{ $t('info-ejemplo') }}</h2>
+    <img src="@/assets/img/ejemplo-postal.png" alt="Ejemplo de postal" class="example-image" />
+  </section>
+
+  <section class="info-section">
+    <h2 class="title">{{ $t('info-pautas') }}</h2>
+    <p>{{ $t('info-estructura') }}:</p>
+    <ul class="points-list">
+      <li>{{ $t('info-saludo1') }}: <em>“¡Hola Paula! ¿Qué tal?”</em></li>
+      <li>{{ $t('info-presentacion1') }}: <em>“Soy Aitor, profesor de 2º de Soldadura de Belategi”</em></li>
+      <li>{{ $t('info-mensaje1') }}: <em>({{ $t('info-mensaje2') }})</em></li>
+      <li>{{ $t('info-despedida1') }}: <em>“Espero que tú también hayas disfrutado de tus vacaciones, un abrazo”</em></li>
+    </ul>
+
+    <ul class="points">
+      <li>{{ $t('info-escitura') }}.</li>
+      <li>{{ $t('info-respetar') }}.</li>
+      <li>{{ $t('info-amable') }}.</li>
+    </ul>
+  </section>
+
 </template>
 
 <script setup>
