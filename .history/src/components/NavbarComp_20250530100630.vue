@@ -329,6 +329,7 @@ function handleLogout() {
 select {
   max-height: 200px;
   overflow-y: auto;
+
 }
 
 .modal-content select:hover {

@@ -328,7 +328,9 @@ function handleLogout() {
 
 select {
   max-height: 200px;
+  /* dropdown ka max height */
   overflow-y: auto;
+  /* scroll vertical agar zyada items hon */
 }
 
 .modal-content select:hover {
@@ -382,58 +384,6 @@ select {
   to {
     opacity: 1;
     transform: scale(1);
-  }
-}
-@media screen and (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 20px;
-  }
-
-  .logo {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .menu {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    padding: 10px 0;
-    gap: 10px;
-  }
-
-  .menu a,
-  .login-btn,
-  .registro-btn {
-    width:25%;
-    text-align: left;
-    font-size: 16px;
-    padding: 10px;
-  }
-
-  .modal-content {
-    width: 75%;
-    padding: 25px 20px;
-  }
-
-  .modal-content input,
-  .modal-content select {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .switch-text {
-    font-size: 13px;
-  }
-
-  .close {
-    top: 8px;
-    right: 12px;
-    font-size: 24px;
   }
 }
 </style>

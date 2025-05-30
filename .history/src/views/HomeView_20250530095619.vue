@@ -5,7 +5,7 @@
       <h1>
         {{ $t('home-bienvenido-a') }} <span class="logo-texto">Cadena de Postales</span>
       </h1>
-      <img src="@/assets/img/logotipo-negro.png" alt="Logotipo Cadena de Postales" />
+      <img src="@/assets/img/logotipo-blanco.png" alt="Logotipo Cadena de Postales" />
       <p class="subheading">{{ $t('home-practica-intro') }}</p>
       <p class="description">
         {{ $t('home-intencion-intro1') }}

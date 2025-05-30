@@ -5,11 +5,12 @@
     </div>
     <div class="card">
       <MatchData v-if="datosMatch && typeof datosMatch === 'object'" :match="datosMatch" />
+
       <p v-else>Cargando datos...</p>
     </div>
 
     <!-- Card 3: UserDataComp (solo para rol 3) -->
-    <div class="card" v-if="userData && userData.role === 3">
+    <div class="card" v-if="userData.role === 3">
       <h2>Datos de Usuarios</h2>
       <UserDataComp :userId="userData.id" />
     </div>
@@ -18,32 +19,46 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import UserFormComp from '@/components/UserFormComp.vue'
+import UserFormView from '@/views/UserFormView.vue'
 import MatchData from '@/components/MatchData.vue'
 import UserDataComp from '@/components/UserDataComp.vue'
 import axios from 'axios'
+import { useApi } from '@/composables/useApi.js'
+
+
 
 const datosMatch = ref(null);
-const userData = ref(null);
 
 const cargarDatosMatch = async () => {
   try {
+
+    const { data } = await axios.get('/api/emparejamientos/lista')
+    datosMatch.value = data;
+    datosMatch.value = data
+
     const token = sessionStorage.getItem('authToken');
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const userId = user ? (user.usuario_id || user.id) : null;
-
-    if (!token) throw new Error('No hay token de autenticación');
-    if (!userId) throw new Error('Usuario no identificado');
+    // Soportar usuario_id o id
+    const userId = user ? (user.usuario_id || user.id) : null; // Obtener el id del usuario logueado
+    console.log('ID del usuario logueado:', userId);
 
     const url = `${import.meta.env.VITE_API_BASE_URL}/api/emparejamientos/lista`;
+    console.log('URL de la solicitud:', url);
 
     const { data } = await axios.get(url, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+    console.log('Datos obtenidos de la API:', data);
 
-    if (!Array.isArray(data)) throw new Error('La respuesta de la API no es válida.');
+    if (!Array.isArray(data)) {
+      throw new Error('La respuesta de la API no es válida.');
+    }
 
     const datosFiltrados = data.filter(match => match.usuario_id === userId);
+    console.log('Datos filtrados:', datosFiltrados);
+
     datosMatch.value = datosFiltrados;
 
   } catch (error) {
@@ -52,21 +67,41 @@ const cargarDatosMatch = async () => {
   }
 }
 
+const cargarDatosUsuarios = async () => {
+  try {
+    datosUsuarios.value = await fetchUsers()
+  } catch (error) {
+    console.error('Error cargando datos de usuarios:', error)
+  }
+}
+
+const editarUsuario = async (userId, nuevosDatos) => {
+  try {
+    const usuarioActualizado = await patchUser(userId, nuevosDatos)
+    console.log('Usuario actualizado:', usuarioActualizado)
+  } catch (error) {
+    console.error('Error editando usuario:', error)
+  }
+};
+
+
 onMounted(async () => {
   try {
-    const res = await axios.get('/api/users/1');
-    userData.value = res.data;
-    await cargarDatosMatch();
+    const res = await axios.get('/api/users/1') 
+    userData.value = res.data
+    await cargarDatosMatch()
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-});
+})
 </script>
 
 <style scoped>
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap; 
+
+  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
+  flex-wrap: wrap;  
   justify-content: center;
   gap: 30px;
   padding: 30px;
@@ -88,17 +123,28 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+/* Versión Tablet - 2 columnas */
+
+ 
 @media (max-width: 1200px) {
   .dashboard-container {
     gap: 20px;
   }
   .card {
+
+    width: calc(50% - 40px); /* 2 cards por fila */
+
     width: calc(80% - 40px);  
     min-width: unset;
     max-width: 100%;
     height: 60vh;
   }
 }
+
+
+/* Versión Móvil - 1 columna */
+
+ 
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
@@ -107,6 +153,7 @@ onMounted(async () => {
     gap: 20px;
   }
 
+
   .card {
     width: 100%;
     min-width: unset;
@@ -114,15 +161,28 @@ onMounted(async () => {
     max-height: none;
     padding: 20px;
   }
+<
+  
+  /* Asegurar que todas las cards sean visibles */
+
+
+ 
+
   .card:last-child {
     margin-bottom: 20px;
   }
+}
+
+
+/* Contenido interno responsive */
+
+ 
+
 .card h2 {
   font-size: clamp(1.2rem, 2vw, 1.4rem);
 }
 
 .card pre {
   font-size: clamp(0.9rem, 1.5vw, 1rem);
-}
 }
 </style>

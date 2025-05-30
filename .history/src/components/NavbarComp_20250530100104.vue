@@ -328,7 +328,9 @@ function handleLogout() {
 
 select {
   max-height: 200px;
+  /* dropdown ka max height */
   overflow-y: auto;
+  /* scroll vertical agar zyada items hon */
 }
 
 .modal-content select:hover {
@@ -409,7 +411,7 @@ select {
   .menu a,
   .login-btn,
   .registro-btn {
-    width:25%;
+    width: 100%;
     text-align: left;
     font-size: 16px;
     padding: 10px;

@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <img src="@/assets/img/logopenascal.png" alt="Logo Peñascal" class="logo" />
+    <img src="@/assets/img/logotipo-blanco.png" alt="Logo Cadena de Postales" class="logo" />
     <p>&copy; 2025 SixCoders.  {{ $t('footer-rights')}}.</p>
      <select @change="changeLanguage($event)">
             <option>es</option>

@@ -66,7 +66,7 @@ onMounted(async () => {
 <style scoped>
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
   justify-content: center;
   gap: 30px;
   padding: 30px;

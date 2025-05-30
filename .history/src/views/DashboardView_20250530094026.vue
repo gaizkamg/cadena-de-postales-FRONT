@@ -66,7 +66,7 @@ onMounted(async () => {
 <style scoped>
 .dashboard-container {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap; /* Permite que las cards pasen a nueva línea */
   justify-content: center;
   gap: 30px;
   padding: 30px;
@@ -88,6 +88,7 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+/* Versión Tablet - 2 columnas */
 @media (max-width: 1200px) {
   .dashboard-container {
     gap: 20px;
@@ -99,6 +100,8 @@ onMounted(async () => {
     height: 60vh;
   }
 }
+
+/* Versión Móvil - 1 columna */
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
