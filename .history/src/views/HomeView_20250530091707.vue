@@ -52,27 +52,6 @@
   font-family: "Qwitcher Grypen", cursive;
   font-weight: 900;
 }
-.participation-button {
-  display: inline-block;
-  margin-top: 2rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #0d7c03;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
-  width: fit-content;
-}
-
-.participation-button:hover {
-  background-color: #0a9396;
-  cursor: pointer;
-}
-
 
 /* Media query para móvil */
 @media (max-width: 768px) {
