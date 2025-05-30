@@ -20,7 +20,6 @@ Postales Frontend se comunica con un backend que maneja autenticación, almacena
 ## 🚀 Tecnologías utilizadas
 
 - **Vue.js**
-- **Vite**
 - **JavaScript**
 - **HTML5**
 - **CSS**
@@ -83,7 +82,7 @@ npm install
 ```bash
 npm run dev
 ```
-4. Abre el navegador en http://localhost:3000
+4. Abre el navegador en http://localhost:5173/info
 
 ## ⚙️ Cómo funciona
 
